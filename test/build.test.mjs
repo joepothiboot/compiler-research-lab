@@ -70,63 +70,23 @@ test("the language-layer section holds all manifest projects", () => {
   assert.ok(!html.includes('<h2 id="h-hw">Hardware</h2>'));
 });
 
-test("each project links its walkthrough, architecture, run steps and tests", () => {
+test("each project links only [abs] [code] [pdf]", () => {
   const html = read("index.html");
 
   for (const p of manifest.projects) {
-    for (const note of ["walkthrough", "architecture", "run", "tests"]) {
-      const id = `note-${p.id}-${note}`;
-      assert.ok(html.includes(`href="#${id}"`), `${p.id}: no link to ${note}`);
-      assert.match(html, new RegExp(`<section class="note" id="${id}"`), id);
-    }
-
-    assert.ok(
-      html.includes(`https://github.com/${p.repo}/tree/${p.commit}`),
-      `${p.id}: source link not pinned`,
-    );
+    const id = `note-${p.id}-abstract`;
+    assert.ok(html.includes(`[<a href="#${id}">abs</a>]`), `${p.id}: no abs`);
+    assert.match(html, new RegExp(`<section class="note" id="${id}"`), id);
 
     assert.ok(
       html.includes(
-        `https://github.com/${p.repo}/blob/${p.commit}/${p.docsPath}`,
+        `[<a href="https://github.com/${p.repo}/tree/${p.commit}">code</a>]`,
       ),
-      `${p.id}: docs link not pinned`,
-    );
-
-    assert.ok(
-      html.includes(`git checkout ${p.commit}`),
-      `${p.id}: run steps not pinned`,
+      `${p.id}: code link not pinned`,
     );
   }
-});
 
-test("json-schema-mlir has a trace viewer note with provenance and a static fallback", () => {
-  const html = read("index.html");
-  assert.ok(html.includes('href="#note-schema-mlir-trace"'), "linked");
-
-  assert.match(
-    html,
-    /<section class="note" id="note-schema-mlir-trace" data-wide /,
-    "wide note",
-  );
-
-  const note = html.slice(html.indexOf('id="note-schema-mlir-trace"'));
-
-  const art = note.slice(
-    0,
-    note.indexOf("</section>", note.indexOf("data-artifact")),
-  );
-
-  assert.match(art, /data-artifact="schema-trace"/);
-  assert.match(art, /class="badge captured"/);
-  assert.match(art, /--emit-trace=person\.trace\.json/);
-
-  for (const pane of ["src", "tok", "ast", "ir"]) {
-    assert.ok(art.includes(`data-pane="${pane}"`), pane);
-  }
-
-  assert.match(art, /<details open>/, "AST is expanded without JS");
-  assert.match(art, /Without JavaScript/);
-  assert.match(html, /assets\/trace-viewer\.js/);
+  assert.ok(!html.includes("-walkthrough"));
 });
 
 test("in-page links resolve and ids are unique", () => {

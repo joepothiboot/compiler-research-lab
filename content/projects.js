@@ -19,7 +19,8 @@
  * @property {string[]} tests
  * @property {string[]} benchmarks
  * @property {string} quickDemo
- * @property {string} thumb
+ * @property {string} art  inline SVG thumbnail, abstract
+ * @property {string} [pdf]
  * @property {string} [trace]
  * @property {string[]} [traceIntro]
  * @property {TourStep[]} tour
@@ -83,7 +84,11 @@ export const PROJECTS = {
     benchmarks: ["schema-pass-timing"],
     quickDemo:
       "Follow one real test function from the dialect, through canonicalization and lowering, to the LLVM dialect, plus one verifier diagnostic.",
-    thumb: "schema-input",
+    art: `<svg viewBox="0 0 176 128" role="img" aria-label="Three overlapping constraints whose shared region is filled: many rules, one meaning">
+<defs><clipPath id="art-schema-a"><circle cx="72" cy="54" r="34"/></clipPath><clipPath id="art-schema-b"><circle cx="104" cy="54" r="34"/></clipPath></defs>
+<g stroke="currentColor" fill="none" stroke-width="1.2" opacity=".45"><circle cx="72" cy="54" r="34"/><circle cx="104" cy="54" r="34"/><circle cx="88" cy="80" r="34"/></g>
+<g clip-path="url(#art-schema-a)"><g clip-path="url(#art-schema-b)"><circle cx="88" cy="80" r="34" fill="var(--accent)"/></g></g>
+</svg>`,
     trace: "schema-trace",
     traceIntro: [
       "`schema-translate --emit-trace` writes what its front end saw and did as one JSON file: the source, the lexer's tokens, the AST with byte ranges, and the IR after import and after `--schema-canonicalize`, with each op tied back to the AST nodes it came from. This viewer draws that file and nothing else; the compiler does not run in your browser.",
@@ -177,7 +182,13 @@ export const PROJECTS = {
     benchmarks: [],
     quickDemo:
       "Diff real compiler passes from the other projects with VizMLIR's own WASM parser, then open the app and try it yourself.",
-    thumb: "viz-nano-linalg-diff",
+    art: `<svg viewBox="0 0 176 128" role="img" aria-label="The same graph twice: one node fades out, one appears, everything else holds">
+<g stroke="currentColor" stroke-width="1.2" opacity=".5"><path d="M30 24 18 64 30 104M30 24 46 64 30 104"/><path d="M130 24 118 64 146 64 130 104M130 24 146 64"/></g>
+<g fill="currentColor"><circle cx="30" cy="24" r="5"/><circle cx="18" cy="64" r="5"/><circle cx="30" cy="104" r="5"/><circle cx="130" cy="24" r="5"/><circle cx="118" cy="64" r="5"/><circle cx="130" cy="104" r="5"/></g>
+<circle cx="46" cy="64" r="5" fill="none" stroke="var(--bad)" stroke-dasharray="2 2"/>
+<circle cx="146" cy="64" r="5" fill="var(--accent)"/>
+<path d="M66 64h32" stroke="currentColor" stroke-width="1" opacity=".35" stroke-dasharray="1 4"/>
+</svg>`,
     tour: [
       {
         title: "Diff json-schema-mlir's canonicalization",
@@ -252,7 +263,10 @@ export const PROJECTS = {
     benchmarks: ["nano-pass-timing", "nano-benchmark", "nano-gpu-results"],
     quickDemo:
       "Follow relu(conv2d(image) + bias) from the dsp dialect through 19 passes to the LLVM dialect, execute it, and see where compile time goes.",
-    thumb: "nano-pass-timing",
+    art: `<svg viewBox="0 0 176 128" role="img" aria-label="A smooth wave and a sampled one tracing it exactly: two independent implementations that agree">
+<path d="M8 64.0 10 60.3 12 56.6 14 53.0 16 49.5 18 46.1 20 42.9 22 39.9 24 37.1 26 34.5 28 32.2 30 30.2 32 28.5 34 27.1 36 26.1 38 25.4 40 25.0 42 25.0 44 25.4 46 26.1 48 27.1 50 28.5 52 30.2 54 32.2 56 34.5 58 37.1 60 39.9 62 42.9 64 46.1 66 49.5 68 53.0 70 56.6 72 60.3 74 64.0 76 67.7 78 71.4 80 75.0 82 78.5 84 81.9 86 85.1 88 88.1 90 90.9 92 93.5 94 95.8 96 97.8 98 99.5 100 100.9 102 101.9 104 102.6 106 103.0 108 103.0 110 102.6 112 101.9 114 100.9 116 99.5 118 97.8 120 95.8 122 93.5 124 90.9 126 88.1 128 85.1 130 81.9 132 78.5 134 75.0 136 71.4 138 67.7 140 64.0 142 60.3 144 56.6 146 53.0 148 49.5 150 46.1 152 42.9 154 39.9 156 37.1 158 34.5 160 32.2 162 30.2 164 28.5 166 27.1 168 26.1" stroke="currentColor" fill="none" stroke-width="1.2" opacity=".45"/>
+<g fill="var(--accent)"><rect x="6.5" y="62.5" width="3" height="3"/><rect x="16.5" y="44.6" width="3" height="3"/><rect x="26.5" y="30.7" width="3" height="3"/><rect x="36.5" y="23.9" width="3" height="3"/><rect x="46.5" y="25.6" width="3" height="3"/><rect x="56.5" y="35.6" width="3" height="3"/><rect x="66.5" y="51.5" width="3" height="3"/><rect x="76.5" y="69.9" width="3" height="3"/><rect x="86.5" y="86.6" width="3" height="3"/><rect x="96.5" y="98.0" width="3" height="3"/><rect x="106.5" y="101.5" width="3" height="3"/><rect x="116.5" y="96.3" width="3" height="3"/><rect x="126.5" y="83.6" width="3" height="3"/><rect x="136.5" y="66.2" width="3" height="3"/><rect x="146.5" y="48.0" width="3" height="3"/><rect x="156.5" y="33.0" width="3" height="3"/><rect x="166.5" y="24.6" width="3" height="3"/></g>
+</svg>`,
     tour: [
       {
         title: "The program",

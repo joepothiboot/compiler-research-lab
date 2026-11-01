@@ -282,40 +282,6 @@ function renderPassEvent(ctx, a) {
   return parts.join("");
 }
 
-/**
- * @param {Ctx} ctx
- * @param {string} prefix
- */
-function renderTimeline(ctx, prefix) {
-  const events = [...ctx.artifacts.values()]
-    .map((h) => h.artifact)
-    .filter(
-      (a) =>
-        a.kind === "pass-event" &&
-        a.id.startsWith(prefix) &&
-        a.provenance.mode !== "unavailable",
-    )
-    .map((a) => /** @type {import("./model.js").PassEventArtifact} */ (a))
-    .sort((x, y) => x.index - y.index);
-
-  if (!events.length) throw new Error(`timeline ${prefix}: no pass events`);
-
-  const hit = lookup(ctx, events[0].id);
-
-  const rows = events
-    .map((e) => {
-      const after = e.after ? ctx.artifacts.get(e.after)?.artifact : undefined;
-
-      const lines =
-        after && "text" in after ? after.text.split("\n").length : "—";
-
-      return `<tr><td class="num">${e.index}</td><td><code>${esc(e.pass)}</code></td><td>${e.changed ? "changed" : '<span class="meta">unchanged</span>'}</td><td class="num">${lines}</td></tr>`;
-    })
-    .join("");
-
-  return `<div class="table-wrap" tabindex="0"><table><caption>Pass events, in execution order</caption><thead><tr><th scope="col" class="num">#</th><th scope="col">Pass</th><th scope="col">Effect</th><th scope="col" class="num">IR lines after</th></tr></thead><tbody>${rows}</tbody></table></div>${provenance(hit)}`;
-}
-
 /** @param {{ title: string, description: string, base: string, body: string }} o */
 export function page({ title, description, base, body }) {
   return `<!doctype html>
@@ -355,42 +321,6 @@ function renderNote(n) {
 
 /**
  * @param {Ctx} ctx
- * @param {string} id
- */
-function renderThumb(ctx, id) {
-  const { artifact: a } = lookup(ctx, id);
-
-  if (a.kind === "profile") {
-    const top = a.entries.filter((e) => e.depth === 0);
-    const max = Math.max(...top.map((e) => e.percent)) || 1;
-
-    const bars = top
-      .map(
-        (e) =>
-          `<span style="--h:${((e.percent / max) * 100).toFixed(1)}%"></span>`,
-      )
-      .join("");
-
-    return `<span class="thumb-bars">${bars}</span>`;
-  }
-
-  if (a.kind === "pass-event" && a.diff) {
-    const rows = a.diff.rows.slice(0, 9).map((r) => {
-      const text = diffRowText(r);
-
-      return `<span class="d-${r.type}">${esc(text)}</span>`;
-    });
-
-    return `<span class="thumb-code">${rows.join("\n")}</span>`;
-  }
-
-  const lines = previewText(a).split("\n").slice(0, 10).join("\n");
-
-  return `<span class="thumb-code">${esc(lines)}</span>`;
-}
-
-/**
- * @param {Ctx} ctx
  * @param {Project} p
  * @returns {{ html: string, notes: Note[] }}
  */
@@ -415,92 +345,24 @@ function projectEntry(ctx, p) {
     ? `<div class="callout" role="note"><p><strong>Status:</strong> ${esc(c.status)}</p>${(c.statusLinks ?? []).map((l) => `<p><a href="${esc(l.href)}">${esc(l.text)}</a></p>`).join("")}</div>`
     : "";
 
-  const live = p.liveUrl
-    ? `<p class="callout">${esc(p.name)} has a live app: <a href="${esc(p.liveUrl)}">${esc(p.liveUrl.replace(/^https:\/\//, ""))}</a>. It deploys from the project's main branch, so it can be newer than the pinned <code>${short(p.commit)}</code> described here.</p>`
-    : "";
-
-  const steps = c.tour
-    .map((s, i) => {
-      const arts = s.artifacts ?? [];
-
-      const body =
-        (s.trace
-          ? `<p class="callout-link"><a href="#note-${esc(p.id)}-trace">Open the front-end trace viewer</a> (source, tokens, AST and IR, linked).</p>`
-          : "") +
-        (s.timeline ? renderTimeline(ctx, s.timeline) : "") +
-        arts.map((id) => renderArtifact(ctx, id, 5)).join("");
-
-      return `<h4 id="${esc(p.id)}-${i + 1}">${i + 1}. ${esc(s.title)}</h4><p>${prose(s.text)}</p>${body}`;
-    })
-    .join("");
-
-  const walk = note(
-    "walkthrough",
-    "Walkthrough",
-    `${status}${c.purpose.map((t) => `<p>${prose(t)}</p>`).join("")}${live}<p><em>${esc(c.quickDemo)}</em></p>${steps}`,
+  const abs = note(
+    "abstract",
+    "Abstract",
+    `${status}${c.purpose.map((t) => `<p>${prose(t)}</p>`).join("")}`,
   );
-
-  const caps = `<ul class="caps">${p.capabilities.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
-
-  const arch = c.architecture
-    .map(
-      (x) =>
-        `<li><h4>${esc(x.name)}</h4><p>${esc(x.text)}</p><p class="meta"><a href="${esc(gh(p, "blob", x.path))}"><code>${esc(x.path)}</code></a></p></li>`,
-    )
-    .join("");
-
-  const archNote = note(
-    "architecture",
-    "Architecture",
-    `${caps}<ol class="arch">${arch}</ol>`,
-  );
-
-  const run = c.run.map((l) => l.replaceAll("{commit}", p.commit)).join("\n");
-
-  const runNote = note(
-    "run",
-    "Run it locally",
-    `<pre tabindex="0" data-copy aria-label="Commands"><code>${esc(run)}</code></pre><p class="meta">${esc(c.runNote)}</p>`,
-  );
-
-  const benches = c.benchmarks.length
-    ? c.benchmarks.map((id) => renderArtifact(ctx, id, 4)).join("")
-    : "<p>No benchmarks are published for this commit.</p>";
-
-  const testsNote = note(
-    "tests",
-    "Tests and benchmarks",
-    `${c.tests.map((id) => renderArtifact(ctx, id, 4)).join("")}${benches}`,
-  );
-
-  const traceNote = c.trace
-    ? note(
-        "trace",
-        "Front-end trace viewer",
-        `${c.traceIntro?.map((t) => `<p>${prose(t)}</p>`).join("")}<p class="meta no-js-only">Without JavaScript the panes below are plain dumps, one after another, with the AST fully expanded; nothing is highlighted.</p>${renderArtifact(ctx, c.trace, 4)}`,
-        true,
-      )
-    : null;
 
   const links = [
+    noteLink(abs, "abs"),
     `<a href="${esc(gh(p, "tree"))}">code</a>`,
-    `<a href="${esc(gh(p, "blob", p.docsPath))}">docs</a>`,
-    ...(p.liveUrl ? [`<a href="${esc(p.liveUrl)}">live app</a>`] : []),
-    noteLink(walk, "walkthrough"),
-    noteLink(archNote, "architecture"),
-    noteLink(runNote, "run"),
-    noteLink(testsNote, "tests"),
-    ...(traceNote ? [noteLink(traceNote, "trace viewer")] : []),
-  ];
-
-  const thumbTitle = lookup(ctx, c.thumb).artifact.title;
+    ...(c.pdf ? [`<a href="${esc(c.pdf)}">pdf</a>`] : []),
+  ].map((l) => `[${l}]`);
 
   const html = `<section class="project" id="${esc(p.id)}" aria-labelledby="h-${esc(p.id)}">
-<a class="thumb" href="#${esc(walk.id)}" tabindex="-1" aria-hidden="true" title="${esc(thumbTitle)}">${renderThumb(ctx, c.thumb)}</a>
+<a class="thumb" href="#${esc(abs.id)}" tabindex="-1" aria-hidden="true">${c.art}</a>
 <div class="entry">
 <h3 id="h-${esc(p.id)}">${esc(p.name)}</h3>
 <p class="venue"><em>${p.stages.map((s) => esc(STAGE_LABEL[s])).join(" · ")}</em> <span class="meta">(<code>${esc(p.version)}</code>)</span></p>
-<p class="links">${links.join(" / ")}</p>
+<p class="links">${links.join(" ")}</p>
 <p>${prose(c.summary)}</p>
 </div>
 </section>`;
@@ -529,8 +391,7 @@ ${entries.map((s) => s.html).join("\n")}
 </section>
 </article>
 <section class="appendix" id="notes" aria-labelledby="h-notes">
-<h2 id="h-notes">Appendix: walkthroughs and captured outputs</h2>
-<p class="meta">The material linked from the detailed project sections above, in order.</p>
+<h2 id="h-notes">Abstracts</h2>
 ${notes}
 </section>`;
 
