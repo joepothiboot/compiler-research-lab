@@ -31,6 +31,7 @@ const goodManifest = () => ({
     project(CHAIN[0], ["source", "diagnostics", "mlir"]),
     project(CHAIN[1], ["passes"]),
     project(CHAIN[2], ["profiling"]),
+    project(CHAIN[3], ["source"]),
   ],
 });
 

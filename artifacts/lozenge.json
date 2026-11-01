@@ -4,7 +4,13 @@
   "capture": {
     "capturedAt": "2026-11-01T14:30:49.387Z",
     "host": "darwin-arm64",
-    "toolchain": {}
+    "toolchain": {
+      "llvm": "23.1.1",
+      "python": "3.11.7",
+      "node": "v22.6.0",
+      "mojo": "1.1.0",
+      "rustc": "1.91.1"
+    }
   },
   "artifacts": [
     {

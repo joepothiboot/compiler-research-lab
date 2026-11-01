@@ -30,7 +30,8 @@ export const STAGE_TEXT = {
   source: "JSON Schema constraints as schema-dialect IR.",
   diagnostics: "Verifier errors with file, line and column.",
   mlir: "Custom dialects lowered to the LLVM dialect.",
-  passes: "IR snapshots and structural diffs, per pass.",
+  passes:
+    "IR snapshots and structural diffs, per pass, and verified rewrite rules.",
   profiling: "Compile time per pass, plus runtime numbers where they exist.",
 };
 
@@ -85,9 +86,9 @@ export const PROJECTS = {
     quickDemo:
       "Follow one real test function from the dialect, through canonicalization and lowering, to the LLVM dialect, plus one verifier diagnostic.",
     art: `<svg viewBox="0 0 176 128" role="img" aria-label="Three overlapping constraints whose shared region is filled: many rules, one meaning">
-<defs><clipPath id="art-schema-a"><circle cx="72" cy="54" r="34"/></clipPath><clipPath id="art-schema-b"><circle cx="104" cy="54" r="34"/></clipPath></defs>
-<g stroke="currentColor" fill="none" stroke-width="1.2" opacity=".45"><circle cx="72" cy="54" r="34"/><circle cx="104" cy="54" r="34"/><circle cx="88" cy="80" r="34"/></g>
-<g clip-path="url(#art-schema-a)"><g clip-path="url(#art-schema-b)"><circle cx="88" cy="80" r="34" fill="var(--accent)"/></g></g>
+<defs><clipPath id="art-schema-a"><circle cx="72" cy="50" r="34"/></clipPath><clipPath id="art-schema-b"><circle cx="104" cy="50" r="34"/></clipPath></defs>
+<g stroke="currentColor" fill="none" stroke-width="1.2" opacity=".45"><circle cx="72" cy="50" r="34"/><circle cx="104" cy="50" r="34"/><circle cx="88" cy="78" r="34"/></g>
+<g clip-path="url(#art-schema-a)"><g clip-path="url(#art-schema-b)"><circle cx="88" cy="78" r="34" fill="var(--accent)"/></g></g>
 </svg>`,
     trace: "schema-trace",
     traceIntro: [
@@ -302,6 +303,62 @@ export const PROJECTS = {
         title: "Profiling",
         text: "Compile-time wall clock per pass, from one run on the capture host. It shows relative cost, not a benchmark. The kernel numbers are the SIMD Mojo kernels on one core. A benchmark of the tiled MLIR kernels against them is not done yet.",
         artifacts: ["nano-pass-timing", "nano-benchmark"],
+      },
+    ],
+  },
+  lozenge: {
+    summary:
+      "A small bitvector language in Haskell whose rewrite rules are proven with z3, checked for critical pairs, and run by both greedy rewriting and equality saturation.",
+    purpose: [
+      "lozenge is an expression language over fixed-width bitvectors, with an untyped and a typed IR and an evaluator for each. Its optimizer is a corpus of rewrite rules in `rules/bitvector.rules`.",
+      "Every rule is checked before it is trusted: by brute force at small widths, and by z3 for all widths. The corpus deliberately includes wrong rules, and the verifier must produce a counterexample for each one.",
+      "Critical-pair analysis finds where two rules overlap and can disagree. The same rules then run two ways, greedy rewriting and e-graph equality saturation, to show where the result depends on rule order.",
+    ],
+    architecture: [
+      {
+        name: "Rule language",
+        path: "src/Lozenge/RuleParse.hs",
+        text: "Parses the rule corpus into patterns over the expression IR.",
+      },
+      {
+        name: "Verification",
+        path: "src/Lozenge/VerifySmt.hs",
+        text: "Proves each rule with z3; VerifyBrute.hs checks small widths exhaustively.",
+      },
+      {
+        name: "Critical pairs",
+        path: "src/Lozenge/Critical.hs",
+        text: "Finds overlapping rule applications and whether they rejoin.",
+      },
+      {
+        name: "Equality saturation",
+        path: "src/Lozenge/Saturate.hs",
+        text: "E-graph with union-find and e-matching, plus cost-based extraction.",
+      },
+    ],
+    run: [
+      "git clone https://github.com/joepothiboot/lozenge && cd lozenge",
+      "git checkout {commit}",
+      "stack test   # z3 on PATH for the SMT tests; otherwise they are skipped",
+      "stack run lozenge -- verify rules/bitvector.rules --json",
+    ],
+    runNote: "Needs GHC via stack, and z3 for the SMT checks.",
+    tests: [],
+    benchmarks: [],
+    quickDemo:
+      "Read the rule corpus: 22 valid rules and 8 deliberately wrong ones.",
+    art: `<svg viewBox="0 0 176 128" role="img" aria-label="A lozenge holding equal terms, one chosen; a wrong rule outside it, struck out">
+<path d="M88 12 136 64 88 116 40 64Z" stroke="currentColor" fill="none" stroke-width="1.2" opacity=".45"/>
+<g stroke="currentColor" stroke-width="1" opacity=".35" stroke-dasharray="2 3"><path d="M72 50 104 50 88 84Z"/><path d="M72 50 88 64 104 50M88 64 88 84"/></g>
+<g fill="currentColor"><circle cx="72" cy="50" r="4"/><circle cx="104" cy="50" r="4"/><circle cx="88" cy="84" r="4"/></g>
+<circle cx="88" cy="64" r="6" fill="var(--accent)"/>
+<g stroke="var(--bad)" stroke-width="1.4"><circle cx="156" cy="28" r="5" fill="none" stroke-dasharray="2 2"/><path d="M150 22 162 34M162 22 150 34"/></g>
+</svg>`,
+    tour: [
+      {
+        title: "The rule corpus",
+        text: "Each rule is a left pattern and a right pattern. The wrong rules carry a comment naming the widths where they fail; the verifier has to find those counterexamples.",
+        artifacts: ["lozenge-rules"],
       },
     ],
   },
