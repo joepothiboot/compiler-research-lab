@@ -1,10 +1,6 @@
 import { esc } from "./esc.js";
 import { renderTraceViewer } from "./render-trace.js";
-import {
-  DIFF_ROWS_COLLAPSED,
-  LONG_LINES,
-  THEME_KEY,
-} from "./constants.js";
+import { DIFF_ROWS_COLLAPSED, LONG_LINES, THEME_KEY } from "./constants.js";
 /** @typedef {import("./model.js").Project} Project */
 /** @typedef {import("./model.js").Manifest} Manifest */
 /** @typedef {import("./model.js").Artifact} Artifact */
