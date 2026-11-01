@@ -7,6 +7,26 @@
   },
   "projects": [
     {
+      "id": "lozenge",
+      "name": "lozenge",
+      "repo": "joepothiboot/lozenge",
+      "version": "851895e",
+      "releaseTag": null,
+      "commit": "851895ea5a7509cdd0798dd6b186f112443a64a0",
+      "docsPath": "README.md",
+      "stages": [
+        "source",
+        "passes"
+      ],
+      "capabilities": [
+        "Bitvector expression language with a typed IR and evaluator",
+        "Rewrite-rule corpus checked by brute force and by z3",
+        "Critical-pair analysis of the rule set",
+        "E-graph equality saturation compared against greedy rewriting",
+        "CLI with JSON output: verify, optimize, critical-pairs"
+      ]
+    },
+    {
       "id": "nano-dsp-mlir",
       "name": "nano-dsp-mlir",
       "repo": "joepothiboot/nano-dsp-mlir",
@@ -70,26 +90,6 @@
         "Lowering to arith/scf/math/func and the LLVM dialect",
         "Verifier diagnostics with MLIR source locations",
         "Mojo library with the same constraint lattice, tested for soundness of meet"
-      ]
-    },
-    {
-      "id": "lozenge",
-      "name": "lozenge",
-      "repo": "joepothiboot/lozenge",
-      "version": "851895e",
-      "releaseTag": null,
-      "commit": "851895ea5a7509cdd0798dd6b186f112443a64a0",
-      "docsPath": "README.md",
-      "stages": [
-        "source",
-        "passes"
-      ],
-      "capabilities": [
-        "Bitvector expression language with a typed IR and evaluator",
-        "Rewrite-rule corpus checked by brute force and by z3",
-        "Critical-pair analysis of the rule set",
-        "E-graph equality saturation compared against greedy rewriting",
-        "CLI with JSON output: verify, optimize, critical-pairs"
       ]
     }
   ]

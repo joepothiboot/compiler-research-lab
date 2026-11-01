@@ -3,7 +3,6 @@ import { renderTraceViewer } from "./render-trace.js";
 import {
   DIFF_ROWS_COLLAPSED,
   LONG_LINES,
-  STAGE_LABEL,
   THEME_KEY,
 } from "./constants.js";
 /** @typedef {import("./model.js").Project} Project */
@@ -361,7 +360,6 @@ function projectEntry(ctx, p) {
 <a class="thumb" href="#${esc(abs.id)}" tabindex="-1" aria-hidden="true">${c.art}</a>
 <div class="entry">
 <h3 id="h-${esc(p.id)}">${esc(p.name)}</h3>
-<p class="venue"><em>${p.stages.map((s) => esc(STAGE_LABEL[s])).join(" · ")}</em> <span class="meta">(<code>${esc(p.version)}</code>)</span></p>
 <p class="links">${links.join(" ")}</p>
 <p>${prose(c.summary)}</p>
 </div>
@@ -383,7 +381,7 @@ export function articlePage(ctx) {
   const body = `<article class="post">
 <header class="post-head">
 <h1>Compiler Research Lab</h1>
-<p class="dek">Dialect design, verified lowering, and constraint-based program analysis — each pinned to a commit and run for real to produce every number on this page.</p>
+<p class="dek">Four compilers on MLIR and LLVM 23, with C++, Python, Rust/WebAssembly and Mojo: a bitvector rewrite engine checked by z3 and e-graphs, an int8 DSP dialect scheduled through the Transform dialect, a browser IR viewer that reads Triton GPU code, and a JSON Schema compiler that lowers constraints to LLVM. Each one is pinned to a commit and run for real to produce every number on this page. The same question keeps coming up across all four: which rewrites can be trusted without ever running them.</p>
 </header>
 <section class="projects" aria-labelledby="h-lang">
 <h2 id="h-lang">Software / language layer</h2>

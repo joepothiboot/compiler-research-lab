@@ -6,19 +6,11 @@ export const STAGES = /** @type {const} */ ([
   "profiling",
 ]);
 
-export const STAGE_LABEL = {
-  source: "Source",
-  diagnostics: "Diagnostics",
-  mlir: "MLIR",
-  passes: "Pass inspection",
-  profiling: "Profiling",
-};
-
 export const CHAIN = /** @type {const} */ ([
+  "lozenge",
   "nano-dsp-mlir",
   "vizmlir",
   "schema-mlir",
-  "lozenge",
 ]);
 
 export const ARTIFACT_KINDS = /** @type {const} */ ([

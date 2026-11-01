@@ -12,9 +12,6 @@ section.project h3 {
 .entry p {
   margin: 0.2rem 0;
 }
-.venue {
-  font-size: 0.9rem;
-}
 .links {
   font: 0.9rem/1.5 var(--sans);
   color: var(--muted);
