@@ -1,7 +1,8 @@
 # compiler-research-lab
 
-A static site about compiler implementation, accelerator modeling, and
-compiler-IR inspection.
+A tensor compiler, an accelerator simulator, and a browser-based IR
+inspector, each pinned to a commit and run for real to produce every
+number in this repo.
 
 Site: https://joepothiboot.github.io/compiler-research-lab/
 
