@@ -1,0 +1,26 @@
+{
+  "project": "lozenge",
+  "commit": "851895ea5a7509cdd0798dd6b186f112443a64a0",
+  "capture": {
+    "capturedAt": "2026-11-01T14:30:49.387Z",
+    "host": "darwin-arm64",
+    "toolchain": {}
+  },
+  "artifacts": [
+    {
+      "id": "lozenge-rules",
+      "kind": "source",
+      "title": "The bitvector rule corpus",
+      "language": "lisp",
+      "text": "; Bitvector rewrite rules: 22 valid, 8 deliberately wrong.\n;\n; A rule that writes its constants as (const w v) is generic: it is checked at\n; every width the verifier is given, and v keeps its low w bits there (so\n; (const w 2) is 0 at width 1). A rule with no constants at all is generic too.\n; A rule with concrete constants, e.g. (const 4 8), is checked at that width only.\n;\n; Every wrong rule has a comment: WRONG at widths <list>, then why. The\n; verdicts at widths 1-6 are in test/golden/corpus-verdicts.txt.\n\n; --- identities ---------------------------------------------------------------\n\n(rule add-zero (add ?x (const w 0)) => ?x)\n(rule mul-one (mul ?x (const w 1)) => ?x)\n(rule mul-zero (mul ?x (const w 0)) => (const w 0))\n(rule xor-self (xor ?x ?x) => (const w 0))\n(rule sub-self (sub ?x ?x) => (const w 0))\n(rule and-ones (and ?x (not (const w 0))) => ?x)\n(rule not-not (not (not ?x)) => ?x)\n(rule neg-neg (neg (neg ?x)) => ?x)\n\n; WRONG at widths 2-6: subtraction is not commutative; x - y = y - x only\n; when 2(x - y) = 0 mod 2^w, which holds for every x, y only at width 1.\n(rule sub-comm (sub ?x ?y) => (sub ?y ?x))\n\n; WRONG at widths 1-6: ~x = -x - 1, never -x.\n(rule not-to-neg (not ?x) => (neg ?x))\n\n; --- strength reductions ------------------------------------------------------\n\n(rule mul-2-to-shl (mul ?x (const w 2)) => (shl ?x (const w 1)))\n(rule add-self-to-shl (add ?x ?x) => (shl ?x (const w 1)))\n(rule neg-to-not-add (neg ?x) => (add (not ?x) (const w 1)))\n(rule sub-to-add-neg (sub ?x ?y) => (add ?x (neg ?y)))\n\n; WRONG at widths 1-2 and 5-6: a shift by 4 clears every bit only when 4 >= w.\n; At widths 1 and 2 the constant 4 truncates to 0, so it does not shift at all.\n(rule shl-4-zero (shl ?x (const w 4)) => (const w 0))\n\n; WRONG at widths 1-6: add is or only when no bit position carries (1 + 1).\n(rule add-to-or (add ?x ?y) => (or ?x ?y))\n\n; --- De Morgan ----------------------------------------------------------------\n\n(rule de-morgan-and (not (and ?x ?y)) => (or (not ?x) (not ?y)))\n(rule de-morgan-or (not (or ?x ?y)) => (and (not ?x) (not ?y)))\n\n; --- comparisons --------------------------------------------------------------\n\n(rule ult-self (ult ?x ?x) => false)\n(rule eq-self (= ?x ?x) => true)\n\n; WRONG at widths 1-6: unsigned and signed order differ once the top bit is set.\n(rule ult-to-slt (ult ?x ?y) => (slt ?x ?y))\n\n; WRONG at every width (it is fixed at 4 bits): x is negative iff x >= 8,\n; i.e. 7 < x; with 8 the rule misses x = 8.\n(rule slt-zero-off-by-one (slt ?x (const 4 0)) => (ult (const 4 8) ?x))\n\n; --- ite simplifications ------------------------------------------------------\n\n(rule ite-same (ite ?p ?x ?x) => ?x)\n(rule ite-true (ite true ?x ?y) => ?x)\n(rule ite-eq-select (ite (= ?x ?y) ?x ?y) => ?y)\n\n; WRONG at widths 1-6: lhs is min(x, y), rhs is max(x, y).\n(rule ite-min-to-max (ite (ult ?x ?y) ?x ?y) => (ite (ult ?y ?x) ?x ?y))\n\n; --- valid only with a precondition -------------------------------------------\n\n; Fixed at 4 bits: shifting left then right loses the top bit unless it is 0.\n(rule shl-lshr (lshr (shl ?x (const 4 1)) (const 4 1)) => ?x\n  :if (ult ?x (const 4 8)))\n\n; x >> k is 0 when x < 2^k; when k >= w, 1 << k is 0 and the precondition is false.\n(rule lshr-small (lshr ?x ?k) => (const w 0)\n  :if (ult ?x (shl (const w 1) ?k)))\n\n; x < x + 1 unless x + 1 wraps, i.e. unless x is all ones.\n(rule ult-succ (ult ?x (add ?x (const w 1))) => true\n  :if (ult ?x (not (const w 0))))\n\n; WRONG at widths 2-6: the precondition says x <= y, but x - y = 0 needs x = y.\n; At width 1, y + 1 wraps to 0 when y = 1, which happens to exclude x = 0, y = 1.\n(rule sub-zero-weak-pre (sub ?x ?y) => (const w 0)\n  :if (ult ?x (add ?y (const w 1))))\n",
+      "location": {
+        "file": "rules/bitvector.rules",
+        "line": 1
+      },
+      "provenance": {
+        "mode": "static",
+        "path": "rules/bitvector.rules"
+      }
+    }
+  ]
+}

@@ -21,7 +21,7 @@
       ],
       "capabilities": [
         "dsp dialect: add, relu, matmul, conv2d with shape verifiers",
-        "dsp → linalg.generic conversion",
+        "dsp \u2192 linalg.generic conversion",
         "dsp.qmatmul: int8 matmul with fixed-point requantization",
         "Tiling and vectorization from a Transform-dialect schedule generated from a target model, checked bit for bit against the unscheduled code",
         "Differential execution tests via mlir-runner",
@@ -70,6 +70,26 @@
         "Lowering to arith/scf/math/func and the LLVM dialect",
         "Verifier diagnostics with MLIR source locations",
         "Mojo library with the same constraint lattice, tested for soundness of meet"
+      ]
+    },
+    {
+      "id": "lozenge",
+      "name": "lozenge",
+      "repo": "joepothiboot/lozenge",
+      "version": "851895e",
+      "releaseTag": null,
+      "commit": "851895ea5a7509cdd0798dd6b186f112443a64a0",
+      "docsPath": "README.md",
+      "stages": [
+        "source",
+        "passes"
+      ],
+      "capabilities": [
+        "Bitvector expression language with a typed IR and evaluator",
+        "Rewrite-rule corpus checked by brute force and by z3",
+        "Critical-pair analysis of the rule set",
+        "E-graph equality saturation compared against greedy rewriting",
+        "CLI with JSON output: verify, optimize, critical-pairs"
       ]
     }
   ]

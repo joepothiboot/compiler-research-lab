@@ -6,6 +6,7 @@ import path from "node:path";
 import { validateArtifactFile } from "../src/model.js";
 import { ROOT } from "./root.mjs";
 import { args, manifest, run, srcDir, tool } from "./capture/common.mjs";
+import { captureLozenge } from "./capture/lozenge.mjs";
 import { captureNanoDsp } from "./capture/nano-dsp.mjs";
 import { captureSchemaMlir } from "./capture/schema-mlir.mjs";
 import { captureVizmlir } from "./capture/vizmlir.mjs";
@@ -55,6 +56,7 @@ const CAPTURES = {
   "schema-mlir": captureSchemaMlir,
   "nano-dsp-mlir": captureNanoDsp,
   vizmlir: captureVizmlir,
+  lozenge: captureLozenge,
 };
 
 const chain = toolchain();

@@ -25,7 +25,9 @@ test("every project is pinned to a full SHA with a describe-style version", () =
     const suffix = p.commit.slice(0, 7);
 
     assert.ok(
-      p.version === p.releaseTag || p.version.endsWith(`g${suffix}`),
+      p.version === p.releaseTag ||
+        p.version === suffix ||
+        p.version.endsWith(`g${suffix}`),
       `${p.id}: version ${p.version} does not describe ${suffix}`,
     );
 

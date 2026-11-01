@@ -18,6 +18,7 @@ export const CHAIN = /** @type {const} */ ([
   "nano-dsp-mlir",
   "vizmlir",
   "schema-mlir",
+  "lozenge",
 ]);
 
 export const ARTIFACT_KINDS = /** @type {const} */ ([
