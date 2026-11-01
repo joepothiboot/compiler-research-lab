@@ -53,10 +53,6 @@ test("the article groups walkthroughs and preserves their manifest order", () =>
     order,
     "projects in order",
   );
-
-  for (const p of manifest.projects) {
-    assert.ok(html.includes(`href="#${p.id}"`), `${p.id}: contents link`);
-  }
 });
 
 test("the language-layer section holds all manifest projects; hardware is separate", () => {

@@ -530,7 +530,6 @@ export function articlePage(ctx) {
 <h1>Compiler Research Lab</h1>
 <p class="dek">Dialect design, verified lowering, and constraint-based program analysis — each pinned to a commit and run for real to produce every number on this page.</p>
 </header>
-<p class="links">${projects.map((p) => `<a href="#${esc(p.id)}">${esc(p.name)}</a>`).join(" · ")}</p>
 <section class="projects" aria-labelledby="h-lang">
 <h2 id="h-lang">Software / language layer</h2>
 ${entries.map((s) => s.html).join("\n")}
