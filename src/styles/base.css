@@ -197,7 +197,6 @@ header.site {
 .post-head {
   margin: 1.5rem 0 2rem;
   padding-bottom: 0.9rem;
-  border-bottom: 2px solid var(--rule);
 }
 .dek {
   font: 1rem/1.5 var(--sans);
@@ -214,5 +213,4 @@ ol.stages li {
 .projects > h2 {
   margin-top: 3rem;
   padding-top: 1.5rem;
-  border-top: 1.5px solid var(--rule);
 }

@@ -2,8 +2,7 @@
 
 Dialect design, verified lowering, and constraint-based program analysis,
 each pinned to a commit and run for real to produce every number in this
-repo. A separate hardware-modeling project is tracked the same way but not
-yet instrumented with captured artifacts.
+repo.
 
 Site: https://joepothiboot.github.io/compiler-research-lab/
 
@@ -19,7 +18,6 @@ commits.
 | [nano-dsp-mlir](https://github.com/joepothiboot/nano-dsp-mlir)       | `0de4c3c` | Dialect, lowering and transform schedule, checked against a reference |
 | [VizMLIR](https://github.com/joepothiboot/vizmlir)                   | `4064da8` | Browser tool for exploring compiler IR                                |
 | [json-schema-mlir](https://github.com/joepothiboot/json-schema-mlir) | `914691c` | Constraint lattice as an MLIR dialect, canonicalized and lowered      |
-| [mock-npu-bench](https://github.com/joepothiboot/mock-npu-bench)     | `65de79f` | Hardware: simulator and performance profiles for a fictional NPU      |
 
 ## Software / language layer
 
@@ -44,13 +42,6 @@ canonicalization, and lowering to the LLVM dialect, plus a Mojo library with
 the same lattice. Captured: 11 lit and 12 Mojo tests. Its section includes a
 trace viewer for the output of `schema-translate --emit-trace`, which links
 each op back to the JSON that produced it.
-
-## Hardware
-
-**mock-npu-bench** simulates MN1, a fictional vector accelerator with an
-in-order core, vector unit, scratchpad and asynchronous DMA. Its examples and
-cycle-level profiles make accelerator behavior tangible. Its overview is
-pinned to `65de79f`; simulator output is not yet captured in this site.
 
 ## How the data stays honest
 

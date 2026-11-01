@@ -55,19 +55,19 @@ test("the article groups walkthroughs and preserves their manifest order", () =>
   );
 });
 
-test("the language-layer section holds all manifest projects; hardware is separate", () => {
+test("the language-layer section holds all manifest projects", () => {
   const html = read("index.html");
   const lang = html.indexOf('<h2 id="h-lang">Software / language layer</h2>');
-  const hw = html.indexOf('<h2 id="h-hw">Hardware</h2>');
 
-  assert.ok(lang > 0 && hw > lang);
+  assert.ok(lang > 0);
 
   for (const p of manifest.projects) {
     const section = html.indexOf(`<section class="project" id="${p.id}"`);
-    assert.ok(section > lang && section < hw, `${p.id}: in language layer`);
+    assert.ok(section > lang, `${p.id}: in language layer`);
   }
 
-  assert.ok(html.includes('<article class="hw-project"><h3>mock-npu-bench'));
+  assert.ok(!html.includes("mock-npu-bench"));
+  assert.ok(!html.includes('<h2 id="h-hw">Hardware</h2>'));
 });
 
 test("each project links its walkthrough, architecture, run steps and tests", () => {

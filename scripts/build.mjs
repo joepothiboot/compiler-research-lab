@@ -11,7 +11,6 @@ import { ROOT } from "./root.mjs";
 const STYLESHEETS = [
   "base.css",
   "projects.css",
-  "terminal.css",
   "trace-viewer.css",
 ];
 
@@ -20,8 +19,6 @@ const BROWSER_MODULES = [
   "copy.js",
   "theme.js",
   "notes.js",
-  "terminal.js",
-  "terminal-output.js",
   "trace-viewer.js",
 ];
 

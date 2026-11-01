@@ -33,16 +33,6 @@ export const STAGE_TEXT = {
   profiling: "Compile time per pass, plus runtime numbers where they exist.",
 };
 
-export const HARDWARE_PROJECT = {
-  id: "mock-npu-bench",
-  name: "mock-npu-bench",
-  repo: "joepothiboot/mock-npu-bench",
-  commit: "65de79f12c1ae2ff917c1b093c71eeec9f190622",
-  docsPath: "README.md",
-  summary:
-    "A cycle-level simulator for a fictional vector accelerator, with an assembler and performance profiles.",
-};
-
 /** @type {Record<string, ProjectContent>} */
 export const PROJECTS = {
   "schema-mlir": {

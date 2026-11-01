@@ -6,8 +6,6 @@ import {
   STAGE_LABEL,
   THEME_KEY,
 } from "./constants.js";
-import { HARDWARE_PROJECT } from "../content/projects.js";
-
 /** @typedef {import("./model.js").Project} Project */
 /** @typedef {import("./model.js").Manifest} Manifest */
 /** @typedef {import("./model.js").Artifact} Artifact */
@@ -332,7 +330,6 @@ export function page({ title, description, base, body }) {
 <script type="module" src="${base}assets/copy.js"></script>
 <script type="module" src="${base}assets/theme.js"></script>
 <script type="module" src="${base}assets/notes.js"></script>
-<script type="module" src="${base}assets/terminal.js"></script>
 <script type="module" src="${base}assets/trace-viewer.js"></script>
 </head>
 <body data-base="${base}">
@@ -521,10 +518,6 @@ export function articlePage(ctx) {
     .map(renderNote)
     .join("");
 
-  const hw = HARDWARE_PROJECT;
-  const hwSource = `https://github.com/${hw.repo}/tree/${hw.commit}`;
-  const hwDocs = `https://github.com/${hw.repo}/blob/${hw.commit}/${hw.docsPath}`;
-
   const body = `<article class="post">
 <header class="post-head">
 <h1>Compiler Research Lab</h1>
@@ -533,10 +526,6 @@ export function articlePage(ctx) {
 <section class="projects" aria-labelledby="h-lang">
 <h2 id="h-lang">Software / language layer</h2>
 ${entries.map((s) => s.html).join("\n")}
-</section>
-<section class="projects" aria-labelledby="h-hw">
-<h2 id="h-hw">Hardware</h2>
-<article class="hw-project"><h3>${esc(hw.name)}</h3><p>${esc(hw.summary)}</p><p class="links"><a href="${esc(hwSource)}">source at pinned commit</a> / <a href="${esc(hwDocs)}">project overview</a></p><p class="meta">Overview only; its outputs are not in the captured artifact set.</p></article>
 </section>
 </article>
 <section class="appendix" id="notes" aria-labelledby="h-notes">
