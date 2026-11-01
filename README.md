@@ -60,6 +60,15 @@ each op back to the JSON that produced it.
 - The build fails if an artifact was captured at a different commit than the
   manifest pins, or if the page references an artifact that doesn't exist.
 
+## Conceptual foundations
+
+[`conceptual-foundations/`](conceptual-foundations/README.md) is a phased,
+practical program that lays the foundations for master's-level compiler
+research: MLIR dialect conversion studied down to its guarantees, SMT modeling
+with Z3, and one preregistered experiment that tests a model against the
+compiler. It holds plans, notes and reports rather than captured artifacts, so
+the site does not show it.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
