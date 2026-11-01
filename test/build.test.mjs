@@ -59,30 +59,8 @@ test("the article groups walkthroughs and preserves their manifest order", () =>
   }
 });
 
-test("the featured set is nano-dsp-mlir, mock-npu-bench and VizMLIR", () => {
+test("walkthroughs precede the other-project section, in manifest order", () => {
   const html = read("index.html");
-  const featured = [
-    ...html.matchAll(
-      /<article class="featured-project" data-project="([^"]+)"/g,
-    ),
-  ].map((m) => m[1]);
-
-  assert.deepEqual(featured, ["nano-dsp-mlir", "mock-npu-bench", "vizmlir"]);
-  assert.ok(html.includes("A small tensor compiler"));
-  assert.ok(html.includes("fictional vector accelerator"));
-  assert.ok(html.includes("browser tool for exploring compiler IR"));
-  assert.ok(
-    html.includes(
-      "https://github.com/joepothiboot/mock-npu-bench/tree/65de79f12c1ae2ff917c1b093c71eeec9f190622",
-    ),
-  );
-  assert.ok(
-    html.includes(
-      "https://github.com/joepothiboot/mock-npu-bench/blob/65de79f12c1ae2ff917c1b093c71eeec9f190622/README.md",
-    ),
-  );
-  assert.match(html, /outputs are not yet in the captured artifact set/);
-
   const other = html.indexOf('<h2 id="h-other">Other project</h2>');
   const schema = html.indexOf('<section class="project" id="schema-mlir"');
   assert.ok(other > 0 && schema > other);

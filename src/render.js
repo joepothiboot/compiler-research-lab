@@ -536,31 +536,6 @@ export function articlePage(ctx) {
     .map(renderNote)
     .join("");
 
-  const featured = FEATURED_PROJECTS.map((f) => {
-    const project = projects.find((p) => p.id === f.id);
-    const repo = project?.repo ?? f.repo;
-    const commit = project?.commit ?? f.commit;
-    const docsPath = project?.docsPath ?? f.docsPath;
-    const name = project?.name ?? f.name;
-
-    if (!repo || !commit || !docsPath || !name) {
-      throw new Error(
-        `featured project ${f.id} is missing repository metadata`,
-      );
-    }
-
-    const source = `https://github.com/${repo}/tree/${commit}`;
-    const docs = `https://github.com/${repo}/blob/${commit}/${docsPath}`;
-    const walkthrough = f.walkthrough
-      ? ` / <a href="#${esc(f.id)}">captured walkthrough</a>`
-      : "";
-    const captureNote = f.walkthrough
-      ? ""
-      : '<p class="meta">Featured overview only; its outputs are not yet in the captured artifact set.</p>';
-
-    return `<article class="featured-project" data-project="${esc(f.id)}"><h3>${esc(name)}</h3><p>${esc(f.summary)}</p><p class="links"><a href="${esc(source)}">source at pinned commit</a> / <a href="${esc(docs)}">project overview</a>${walkthrough}</p>${captureNote}</article>`;
-  }).join("\n");
-
   const body = `<article class="post">
 <header class="post-head">
 <p class="kicker">manifest.json</p>
@@ -568,11 +543,8 @@ export function articlePage(ctx) {
 <p class="dek">A tensor compiler, an accelerator simulator, and a browser-based IR inspector, each pinned to a commit and run for real to produce every number on this page.</p>
 <p class="byline">${captured ? `Outputs captured <time datetime="${esc(captured.slice(0, 10))}">${esc(captured.slice(0, 10))}</time> · ` : ""}LLVM ${esc(ctx.manifest.toolchain.llvm)}</p>
 </header>
-<p>The featured set connects compiler implementation, accelerator modeling, and IR inspection. Detailed walkthroughs use pinned project revisions and real tool output; mock-npu-bench is linked at a fixed revision but its outputs are not yet captured here.</p>
-<section class="featured-projects" aria-labelledby="h-featured">
-<h2 id="h-featured">Featured projects</h2>
-${featured}
-</section>
+<p>Detailed walkthroughs below use pinned project revisions and real tool output.</p>
+<p class="links">${projects.map((p) => `<a href="#${esc(p.id)}">${esc(p.name)}</a>`).join(" · ")}</p>
 <section class="projects" aria-labelledby="h-walkthroughs">
 <h2 id="h-walkthroughs">Featured project walkthroughs</h2>
 ${walkthroughs.map((s) => s.html).join("\n")}
