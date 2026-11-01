@@ -62,6 +62,7 @@
 }
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;
@@ -203,11 +204,6 @@ header.site {
   color: var(--fg);
   max-width: 34rem;
   margin: 0.4rem 0 0;
-}
-.byline {
-  margin: 0.75rem 0 0;
-  font: 0.8rem var(--mono);
-  color: var(--muted);
 }
 ol.stages {
   padding-left: 1.25rem;

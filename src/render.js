@@ -502,7 +502,7 @@ function projectEntry(ctx, p) {
 <a class="thumb" href="#${esc(walk.id)}" tabindex="-1" aria-hidden="true" title="${esc(thumbTitle)}">${renderThumb(ctx, c.thumb)}</a>
 <div class="entry">
 <h3 id="h-${esc(p.id)}">${esc(p.name)}</h3>
-<p class="venue"><em>${p.stages.map((s) => esc(STAGE_LABEL[s])).join(" · ")}</em> <span class="meta">(<code>${esc(p.version)}</code>, pinned at <code>${short(p.commit)}</code>)</span></p>
+<p class="venue"><em>${p.stages.map((s) => esc(STAGE_LABEL[s])).join(" · ")}</em> <span class="meta">(<code>${esc(p.version)}</code>)</span></p>
 <p class="links">${links.join(" / ")}</p>
 <p>${prose(c.summary)}</p>
 </div>
@@ -515,11 +515,6 @@ function projectEntry(ctx, p) {
 export function articlePage(ctx) {
   const { projects } = ctx.manifest;
   const entries = projects.map((p) => projectEntry(ctx, p));
-
-  const captured = [...ctx.artifacts.values()]
-    .map((h) => h.file.capture.capturedAt)
-    .sort()
-    .at(-1);
 
   const notes = entries
     .flatMap((s) => s.notes)
@@ -534,7 +529,6 @@ export function articlePage(ctx) {
 <header class="post-head">
 <h1>Compiler Research Lab</h1>
 <p class="dek">Dialect design, verified lowering, and constraint-based program analysis — each pinned to a commit and run for real to produce every number on this page.</p>
-<p class="byline">${captured ? `Outputs captured <time datetime="${esc(captured.slice(0, 10))}">${esc(captured.slice(0, 10))}</time> · ` : ""}LLVM ${esc(ctx.manifest.toolchain.llvm)}</p>
 </header>
 <p class="links">${projects.map((p) => `<a href="#${esc(p.id)}">${esc(p.name)}</a>`).join(" · ")}</p>
 <section class="projects" aria-labelledby="h-lang">

@@ -14,12 +14,12 @@ Captured projects are pinned to commits in `manifest.json`. Their test results,
 IR dumps, diagnostics and timings come from the projects' own tools at those
 commits.
 
-| Project                                                           | Commit    | Focus                                                      |
-| ------------------------------------------------------------------ | --------- | ----------------------------------------------------------- |
-| [nano-dsp-mlir](https://github.com/joepothiboot/nano-dsp-mlir)     | `0de4c3c` | Dialect, lowering and transform schedule, checked against a reference |
-| [VizMLIR](https://github.com/joepothiboot/vizmlir)                 | `4064da8` | Browser tool for exploring compiler IR                       |
-| [json-schema-mlir](https://github.com/joepothiboot/json-schema-mlir) | `914691c` | Constraint lattice as an MLIR dialect, canonicalized and lowered |
-| [mock-npu-bench](https://github.com/joepothiboot/mock-npu-bench)   | `65de79f` | Hardware: simulator and performance profiles for a fictional NPU |
+| Project                                                              | Commit    | Focus                                                                 |
+| -------------------------------------------------------------------- | --------- | --------------------------------------------------------------------- |
+| [nano-dsp-mlir](https://github.com/joepothiboot/nano-dsp-mlir)       | `0de4c3c` | Dialect, lowering and transform schedule, checked against a reference |
+| [VizMLIR](https://github.com/joepothiboot/vizmlir)                   | `4064da8` | Browser tool for exploring compiler IR                                |
+| [json-schema-mlir](https://github.com/joepothiboot/json-schema-mlir) | `914691c` | Constraint lattice as an MLIR dialect, canonicalized and lowered      |
+| [mock-npu-bench](https://github.com/joepothiboot/mock-npu-bench)     | `65de79f` | Hardware: simulator and performance profiles for a fictional NPU      |
 
 ## Software / language layer
 
