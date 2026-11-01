@@ -8,11 +8,7 @@ import { artifactIndex, articlePage } from "../src/render.js";
 import { PROJECTS, STAGE_TEXT } from "../content/projects.js";
 import { ROOT } from "./root.mjs";
 
-const STYLESHEETS = [
-  "base.css",
-  "projects.css",
-  "trace-viewer.css",
-];
+const STYLESHEETS = ["base.css", "projects.css", "trace-viewer.css"];
 
 const BROWSER_MODULES = [
   "constants.js",
