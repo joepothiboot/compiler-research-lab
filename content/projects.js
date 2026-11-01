@@ -14,8 +14,6 @@
  * @property {string} [status]
  * @property {{ text: string, href?: string }[]} [statusLinks]
  * @property {{ name: string, path: string, text: string }[]} architecture
- * @property {string[]} run
- * @property {string} runNote
  * @property {string[]} tests
  * @property {string[]} benchmarks
  * @property {string} quickDemo
@@ -72,15 +70,6 @@ export const PROJECTS = {
         text: "StringConstraints and NumberConstraints with subsumes, meet and validate, following the same rules as the two passes above.",
       },
     ],
-    run: [
-      "git clone https://github.com/joepothiboot/json-schema-mlir && cd json-schema-mlir",
-      "git checkout {commit}",
-      'MLIR_INSTALL="$(brew --prefix llvm)" ./build.sh   # configures, builds schema-opt, runs check-schema',
-      "./build/bin/schema-opt test/Dialect/Schema/schema-canonicalize.mlir --schema-canonicalize --split-input-file",
-      "pixi run test-mojo   # Mojo lattice tests; pixi installs the pinned Mojo",
-    ],
-    runNote:
-      "Needs LLVM/MLIR with FileCheck and lit (captured with the toolchain listed below). Clone into a path without spaces, because lit's %s substitution breaks on them.",
     tests: ["schema-tests", "schema-mojo-tests"],
     benchmarks: ["schema-pass-timing"],
     quickDemo:
@@ -171,14 +160,6 @@ export const PROJECTS = {
         text: "SSA-normalized structural diff; canvas graph renderer.",
       },
     ],
-    run: [
-      "git clone https://github.com/joepothiboot/vizmlir && cd vizmlir",
-      "git checkout {commit}",
-      "rustup target add wasm32-unknown-unknown",
-      "npm ci && npm run dev",
-    ],
-    runNote:
-      "Needs Node 20+ and Rust with the wasm32-unknown-unknown target. wasm-opt (binaryen) is optional.",
     tests: ["viz-tests"],
     benchmarks: [],
     quickDemo:
@@ -251,14 +232,6 @@ export const PROJECTS = {
         text: "Scalar loop nests used as an independent check on both of the above.",
       },
     ],
-    run: [
-      "git clone https://github.com/joepothiboot/nano-dsp-mlir && cd nano-dsp-mlir",
-      "git checkout {commit}",
-      "./test.sh   # finds Homebrew LLVM/MLIR or $MLIR_DIR, builds, runs check-nanodsp",
-      "pixi run test-mojo && pixi run test-reference && pixi run bench",
-    ],
-    runNote:
-      "Needs LLVM/MLIR with mlir-runner, FileCheck and lit. Clone into a path without spaces. The Mojo and C++ steps need only pixi, which installs the pinned Mojo.",
     tests: ["nano-tests", "nano-mojo-tests", "nano-reference-tests"],
     benchmarks: ["nano-pass-timing", "nano-benchmark", "nano-gpu-results"],
     quickDemo:
@@ -336,13 +309,6 @@ export const PROJECTS = {
         text: "E-graph with union-find and e-matching, plus cost-based extraction.",
       },
     ],
-    run: [
-      "git clone https://github.com/joepothiboot/lozenge && cd lozenge",
-      "git checkout {commit}",
-      "stack test   # z3 on PATH for the SMT tests; otherwise they are skipped",
-      "stack run lozenge -- verify rules/bitvector.rules --json",
-    ],
-    runNote: "Needs GHC via stack, and z3 for the SMT checks.",
     tests: [],
     benchmarks: [],
     quickDemo:
