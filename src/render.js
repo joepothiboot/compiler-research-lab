@@ -354,6 +354,7 @@ function projectEntry(ctx, p) {
     noteLink(abs, "abs"),
     `<a href="${esc(gh(p, "tree"))}">code</a>`,
     ...(c.pdf ? [`<a href="${esc(c.pdf)}">pdf</a>`] : []),
+    ...(p.liveUrl ? [`<a href="${esc(p.liveUrl)}">live</a>`] : []),
   ].map((l) => `[${l}]`);
 
   const html = `<section class="project" id="${esc(p.id)}" aria-labelledby="h-${esc(p.id)}">
@@ -381,7 +382,7 @@ export function articlePage(ctx) {
   const body = `<article class="post">
 <header class="post-head">
 <h1>Compiler Research Lab</h1>
-<p class="dek">Four compilers on MLIR and LLVM 23, with C++, Python, Rust/WebAssembly and Mojo: a bitvector rewrite engine checked by z3 and e-graphs, an int8 DSP dialect scheduled through the Transform dialect, a browser IR viewer that reads Triton GPU code, and a JSON Schema compiler that lowers constraints to LLVM. Each one is pinned to a commit and run for real to produce every number on this page. The same question keeps coming up across all four: which rewrites can be trusted without ever running them.</p>
+<p class="dek">A bitvector rewrite engine in Haskell, where every rule is checked by brute force and by z3 (including deliberately wrong rules that must produce counterexamples), the rule set is tested for confluence through critical pairs, and e-graph equality saturation is measured against greedy rewriting. Alongside it are an int8 DSP dialect on MLIR and LLVM 23 with Transform-dialect schedules checked bit for bit, a Rust/WebAssembly IR viewer for Triton GPU code, and a JSON Schema compiler that lowers constraints to LLVM. Each one is pinned to a commit and run for real to produce every number on this page. Under all of them sits one question: which rewrites can be trusted without ever running them.</p>
 </header>
 <section class="projects" aria-labelledby="h-lang">
 <h2 id="h-lang">Software / language layer</h2>
