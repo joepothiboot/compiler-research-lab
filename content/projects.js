@@ -33,29 +33,15 @@ export const STAGE_TEXT = {
   profiling: "Compile time per pass, plus runtime numbers where they exist.",
 };
 
-export const FEATURED_PROJECTS = [
-  {
-    id: "nano-dsp-mlir",
-    summary:
-      "A small tensor compiler whose output is checked against an independent reference.",
-    walkthrough: true,
-  },
-  {
-    id: "mock-npu-bench",
-    name: "mock-npu-bench",
-    repo: "joepothiboot/mock-npu-bench",
-    commit: "65de79f12c1ae2ff917c1b093c71eeec9f190622",
-    docsPath: "README.md",
-    summary:
-      "A cycle-level simulator for a fictional vector accelerator, with an assembler and performance profiles.",
-  },
-  {
-    id: "vizmlir",
-    summary:
-      "A browser tool for exploring compiler IR, pass traces and structural diffs.",
-    walkthrough: true,
-  },
-];
+export const HARDWARE_PROJECT = {
+  id: "mock-npu-bench",
+  name: "mock-npu-bench",
+  repo: "joepothiboot/mock-npu-bench",
+  commit: "65de79f12c1ae2ff917c1b093c71eeec9f190622",
+  docsPath: "README.md",
+  summary:
+    "A cycle-level simulator for a fictional vector accelerator, with an assembler and performance profiles.",
+};
 
 /** @type {Record<string, ProjectContent>} */
 export const PROJECTS = {
@@ -227,7 +213,7 @@ export const PROJECTS = {
 
   "nano-dsp-mlir": {
     summary:
-      "A small image/math DSL dialect lowered to linalg and LLVM, with differential execution tests.",
+      "A small DSL dialect lowered to linalg and LLVM, verified by differential testing against independent reference implementations.",
     purpose: [
       "nano-dsp-mlir defines a `dsp` dialect (add, relu, matmul, conv2d) with shape verifiers, and lowers it to linalg.generic. From there the tests lower through stock MLIR passes to LLVM and execute with mlir-runner to check numeric results.",
       "Each dsp op is also implemented as a SIMD Mojo kernel (`mojo/nanodsp/`) and as a plain C++ loop nest (`reference/`). All three implementations are tested against the same expected values, and the Mojo kernels are benchmarked. The upstream README also describes pieces not in the tree yet: transform-dialect schedules, -nanodsp-optimize, the Python DSL and sweep scripts.",

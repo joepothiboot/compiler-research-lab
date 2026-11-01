@@ -6,7 +6,7 @@ import {
   STAGE_LABEL,
   THEME_KEY,
 } from "./constants.js";
-import { FEATURED_PROJECTS } from "../content/projects.js";
+import { HARDWARE_PROJECT } from "../content/projects.js";
 
 /** @typedef {import("./model.js").Project} Project */
 /** @typedef {import("./model.js").Manifest} Manifest */
@@ -515,15 +515,6 @@ function projectEntry(ctx, p) {
 export function articlePage(ctx) {
   const { projects } = ctx.manifest;
   const entries = projects.map((p) => projectEntry(ctx, p));
-  const featuredWalkthroughIds = new Set(
-    FEATURED_PROJECTS.filter((p) => p.walkthrough).map((p) => p.id),
-  );
-  const walkthroughs = projects.flatMap((p, i) =>
-    featuredWalkthroughIds.has(p.id) ? [entries[i]] : [],
-  );
-  const otherProjects = projects.flatMap((p, i) =>
-    !featuredWalkthroughIds.has(p.id) ? [entries[i]] : [],
-  );
 
   const captured = [...ctx.artifacts.values()]
     .map((h) => h.file.capture.capturedAt)
@@ -535,21 +526,24 @@ export function articlePage(ctx) {
     .map(renderNote)
     .join("");
 
+  const hw = HARDWARE_PROJECT;
+  const hwSource = `https://github.com/${hw.repo}/tree/${hw.commit}`;
+  const hwDocs = `https://github.com/${hw.repo}/blob/${hw.commit}/${hw.docsPath}`;
+
   const body = `<article class="post">
 <header class="post-head">
 <h1>Compiler Research Lab</h1>
-<p class="dek">A tensor compiler, an accelerator simulator, and a browser-based IR inspector, each pinned to a commit and run for real to produce every number on this page.</p>
+<p class="dek">Dialect design, verified lowering, and constraint-based program analysis — each pinned to a commit and run for real to produce every number on this page.</p>
 <p class="byline">${captured ? `Outputs captured <time datetime="${esc(captured.slice(0, 10))}">${esc(captured.slice(0, 10))}</time> · ` : ""}LLVM ${esc(ctx.manifest.toolchain.llvm)}</p>
 </header>
 <p class="links">${projects.map((p) => `<a href="#${esc(p.id)}">${esc(p.name)}</a>`).join(" · ")}</p>
-<section class="projects" aria-labelledby="h-walkthroughs">
-<h2 id="h-walkthroughs">Projects</h2>
-${walkthroughs.map((s) => s.html).join("\n")}
+<section class="projects" aria-labelledby="h-lang">
+<h2 id="h-lang">Software / language layer</h2>
+${entries.map((s) => s.html).join("\n")}
 </section>
-<section class="projects" aria-labelledby="h-other">
-<h2 id="h-other">Other project</h2>
-<p>json-schema-mlir remains here as an additional compiler-front-end and diagnostics example. <a href="#schema-mlir">Read its walkthrough</a>.</p>
-${otherProjects.map((s) => s.html).join("\n")}
+<section class="projects" aria-labelledby="h-hw">
+<h2 id="h-hw">Hardware</h2>
+<article class="hw-project"><h3>${esc(hw.name)}</h3><p>${esc(hw.summary)}</p><p class="links"><a href="${esc(hwSource)}">source at pinned commit</a> / <a href="${esc(hwDocs)}">project overview</a></p><p class="meta">Overview only; its outputs are not in the captured artifact set.</p></article>
 </section>
 </article>
 <section class="appendix" id="notes" aria-labelledby="h-notes">
@@ -561,7 +555,7 @@ ${notes}
   return page({
     title: "Compiler Research Lab",
     description:
-      "Compiler implementation, accelerator modeling, and browser-based compiler IR inspection.",
+      "Dialect design, compiler verification, and program analysis, with a separate hardware-modeling project.",
     base: "",
     body,
   });

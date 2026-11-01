@@ -13,6 +13,18 @@ section.project h3 {
 .entry p {
   margin: 0.2rem 0;
 }
+.hw-project {
+  margin: 1rem 0 2rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+}
+.hw-project h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1.05rem;
+}
+.hw-project p {
+  margin: 0.3rem 0;
+}
 .venue {
   font-size: 0.95rem;
 }
