@@ -2,7 +2,7 @@
   "project": "schema-mlir",
   "commit": "914691c49d2d685f26fb67e5ebd08ed968ea4fe7",
   "capture": {
-    "capturedAt": "2026-10-01T14:15:04.206Z",
+    "capturedAt": "2026-11-01T08:38:06.018Z",
     "host": "darwin-arm64",
     "toolchain": {
       "llvm": "23.1.1",
@@ -22,7 +22,7 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "log": "PASS: JSON-SCHEMA-MLIR :: Import/parse-errors.test (1 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/ast.test (2 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/lex-errors.test (3 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/import-errors.test (4 of 11)\nPASS: JSON-SCHEMA-MLIR :: Dialect/Schema/ops.mlir (5 of 11)\nPASS: JSON-SCHEMA-MLIR :: Dialect/Schema/schema-canonicalize.mlir (6 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/person-example.test (7 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/tokens.test (8 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/trace.test (9 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/import.test (10 of 11)\nPASS: JSON-SCHEMA-MLIR :: Lowering/lower-to-std.mlir (11 of 11)\n\nTotal Discovered Tests: 11\n  Passed: 11 (100.00%)",
+      "log": "PASS: JSON-SCHEMA-MLIR :: Dialect/Schema/schema-canonicalize.mlir (1 of 11)\nPASS: JSON-SCHEMA-MLIR :: Dialect/Schema/ops.mlir (2 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/import-errors.test (3 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/parse-errors.test (4 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/ast.test (5 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/lex-errors.test (6 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/person-example.test (7 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/tokens.test (8 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/trace.test (9 of 11)\nPASS: JSON-SCHEMA-MLIR :: Lowering/lower-to-std.mlir (10 of 11)\nPASS: JSON-SCHEMA-MLIR :: Import/import.test (11 of 11)\n\nTotal Discovered Tests: 11\n  Passed: 11 (100.00%)",
       "provenance": {
         "mode": "captured",
         "command": "lit -v build/test"
@@ -265,7 +265,7 @@
       ],
       "provenance": {
         "mode": "captured",
-        "command": "schema-opt 'lab:inputs/schema-mlir/contradictory-bounds.mlir'"
+        "command": "schema-opt lab:inputs/schema-mlir/contradictory-bounds.mlir"
       }
     },
     {
@@ -2988,48 +2988,48 @@
       "title": "Compile-time pass timing",
       "metric": "wall time",
       "unit": "s",
-      "total": 0.0013,
+      "total": 0.0012,
       "entries": [
         {
           "name": "Parser",
           "value": 0.0003,
-          "percent": 20.6,
-          "depth": 0
-        },
-        {
-          "name": "CanonicalizerPass",
-          "value": 0,
-          "percent": 3.3,
-          "depth": 0
-        },
-        {
-          "name": "'func.func' Pipeline",
-          "value": 0,
-          "percent": 1.7,
-          "depth": 0
-        },
-        {
-          "name": "SchemaCanonicalizerPass",
-          "value": 0,
-          "percent": 1.7,
-          "depth": 1
-        },
-        {
-          "name": "LowerSchemaToStandardPass",
-          "value": 0.0002,
-          "percent": 15.7,
-          "depth": 0
-        },
-        {
-          "name": "ReconcileUnrealizedCastsPass",
-          "value": 0,
-          "percent": 3.8,
+          "percent": 23.8,
           "depth": 0
         },
         {
           "name": "CanonicalizerPass",
           "value": 0.0001,
-          "percent": 9.1,
+          "percent": 4.4,
+          "depth": 0
+        },
+        {
+          "name": "'func.func' Pipeline",
+          "value": 0,
+          "percent": 2.1,
+          "depth": 0
+        },
+        {
+          "name": "SchemaCanonicalizerPass",
+          "value": 0,
+          "percent": 2,
+          "depth": 1
+        },
+        {
+          "name": "LowerSchemaToStandardPass",
+          "value": 0.0002,
+          "percent": 16.9,
+          "depth": 0
+        },
+        {
+          "name": "ReconcileUnrealizedCastsPass",
+          "value": 0,
+          "percent": 3.1,
+          "depth": 0
+        },
+        {
+          "name": "CanonicalizerPass",
+          "value": 0.0001,
+          "percent": 7.1,
           "depth": 0
         },
         {
@@ -3041,25 +3041,25 @@
         {
           "name": "(A) DominanceInfo",
           "value": 0,
-          "percent": 0,
+          "percent": 0.1,
           "depth": 1
         },
         {
           "name": "SymbolDCEPass",
           "value": 0.0001,
-          "percent": 5.4,
+          "percent": 4.7,
           "depth": 0
         },
         {
           "name": "Output",
           "value": 0.0001,
-          "percent": 5.7,
+          "percent": 10.8,
           "depth": 0
         },
         {
           "name": "Rest",
-          "value": 0.0004,
-          "percent": 32.8,
+          "value": 0.0003,
+          "percent": 25.1,
           "depth": 0
         }
       ],

@@ -2,7 +2,7 @@
   "project": "nano-dsp-mlir",
   "commit": "0de4c3c45b25a06758c2f28e26f25cc88aa9dfd1",
   "capture": {
-    "capturedAt": "2026-10-01T14:15:07.786Z",
+    "capturedAt": "2026-11-01T08:38:11.989Z",
     "host": "darwin-arm64",
     "toolchain": {
       "llvm": "23.1.1",
@@ -22,7 +22,7 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "log": "PASS: NANO-DSP-MLIR :: Conversion/DSPToLinalg/add.mlir (1 of 23)\nPASS: NANO-DSP-MLIR :: Conversion/DSPToLinalg/relu.mlir (2 of 23)\nPASS: NANO-DSP-MLIR :: Conversion/DSPToLinalg/qmatmul.mlir (3 of 23)\nPASS: NANO-DSP-MLIR :: Conversion/DSPToLinalg/matmul.mlir (4 of 23)\nPASS: NANO-DSP-MLIR :: Conversion/DSPToLinalg/conv2d.mlir (5 of 23)\nPASS: NANO-DSP-MLIR :: Dialect/DSP/canonicalize.mlir (6 of 23)\nPASS: NANO-DSP-MLIR :: Dialect/DSP/ops.mlir (7 of 23)\nPASS: NANO-DSP-MLIR :: Dialect/DSP/invalid.mlir (8 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/add.mlir (9 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/conv2d.mlir (10 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/conv2d-strided.mlir (11 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/conv2d-multichannel.mlir (12 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/matmul.mlir (13 of 23)\nPASS: NANO-DSP-MLIR :: Integration/end-to-end.mlir (14 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/pipeline.mlir (15 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/relu.mlir (16 of 23)\nPASS: NANO-DSP-MLIR :: Schedule/codegen.mlir (17 of 23)\nPASS: NANO-DSP-MLIR :: Schedule/optimize.mlir (18 of 23)\nPASS: NANO-DSP-MLIR :: Schedule/emit-schedule.mlir (19 of 23)\nPASS: NANO-DSP-MLIR :: Hexagon/kernels-i8.mlir (20 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/qmatmul.mlir (21 of 23)\nPASS: NANO-DSP-MLIR :: Hexagon/kernels-f32.mlir (22 of 23)\nPASS: NANO-DSP-MLIR :: Integration/Schedule/bit-exact.mlir (23 of 23)\n\nTotal Discovered Tests: 23\n  Passed: 23 (100.00%)",
+      "log": "PASS: NANO-DSP-MLIR :: Dialect/DSP/invalid.mlir (1 of 23)\nPASS: NANO-DSP-MLIR :: Dialect/DSP/ops.mlir (2 of 23)\nPASS: NANO-DSP-MLIR :: Dialect/DSP/canonicalize.mlir (3 of 23)\nPASS: NANO-DSP-MLIR :: Conversion/DSPToLinalg/qmatmul.mlir (4 of 23)\nPASS: NANO-DSP-MLIR :: Conversion/DSPToLinalg/matmul.mlir (5 of 23)\nPASS: NANO-DSP-MLIR :: Conversion/DSPToLinalg/relu.mlir (6 of 23)\nPASS: NANO-DSP-MLIR :: Conversion/DSPToLinalg/add.mlir (7 of 23)\nPASS: NANO-DSP-MLIR :: Conversion/DSPToLinalg/conv2d.mlir (8 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/conv2d-strided.mlir (9 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/conv2d.mlir (10 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/matmul.mlir (11 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/conv2d-multichannel.mlir (12 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/add.mlir (13 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/pipeline.mlir (14 of 23)\nPASS: NANO-DSP-MLIR :: Schedule/emit-schedule.mlir (15 of 23)\nPASS: NANO-DSP-MLIR :: Schedule/optimize.mlir (16 of 23)\nPASS: NANO-DSP-MLIR :: Integration/end-to-end.mlir (17 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/relu.mlir (18 of 23)\nPASS: NANO-DSP-MLIR :: Schedule/codegen.mlir (19 of 23)\nPASS: NANO-DSP-MLIR :: Hexagon/kernels-i8.mlir (20 of 23)\nPASS: NANO-DSP-MLIR :: Integration/DSPToLinalg/qmatmul.mlir (21 of 23)\nPASS: NANO-DSP-MLIR :: Hexagon/kernels-f32.mlir (22 of 23)\nPASS: NANO-DSP-MLIR :: Integration/Schedule/bit-exact.mlir (23 of 23)\n\nTotal Discovered Tests: 23\n  Passed: 23 (100.00%)",
       "provenance": {
         "mode": "captured",
         "command": "lit -v build/test"
@@ -501,7 +501,7 @@
       "kind": "execution",
       "title": "Executed with mlir-runner",
       "exitCode": 0,
-      "stdout": "Unranked Memref base@ = 0x79730d5540 rank = 4 offset = 0 sizes = [1, 2, 2, 1] strides = [4, 2, 1, 1] data = \n[[[[0], \n   [3]], \n  [[30], \n   [39]]]]",
+      "stdout": "Unranked Memref base@ = 0x7c46d580c0 rank = 4 offset = 0 sizes = [1, 2, 2, 1] strides = [4, 2, 1, 1] data = \n[[[[0], \n   [3]], \n  [[30], \n   [39]]]]",
       "expected": [
         "rank = 4 offset = 0 sizes = [1, 2, 2, 1]",
         "0",
@@ -1050,20 +1050,20 @@
       "entries": [
         {
           "name": "Parser",
-          "value": 0.0011,
-          "percent": 15.3,
+          "value": 0.001,
+          "percent": 14.1,
           "depth": 0
         },
         {
           "name": "ConvertDSPToLinalg",
           "value": 0.0003,
-          "percent": 4,
+          "percent": 3.7,
           "depth": 0
         },
         {
           "name": "OneShotBufferizePass",
           "value": 0.0003,
-          "percent": 4.5,
+          "percent": 4.3,
           "depth": 0
         },
         {
@@ -1074,14 +1074,14 @@
         },
         {
           "name": "CanonicalizerPass",
-          "value": 0.0001,
-          "percent": 2,
+          "value": 0.0002,
+          "percent": 2.2,
           "depth": 0
         },
         {
           "name": "OwnershipBasedBufferDeallocationPass",
           "value": 0.0001,
-          "percent": 1.8,
+          "percent": 1.9,
           "depth": 0
         },
         {
@@ -1093,19 +1093,19 @@
         {
           "name": "BufferDeallocationSimplificationPass",
           "value": 0.0001,
-          "percent": 1.6,
+          "percent": 1.7,
           "depth": 0
         },
         {
           "name": "LowerDeallocationsPass",
           "value": 0.0001,
-          "percent": 1.2,
+          "percent": 1.4,
           "depth": 0
         },
         {
           "name": "CSEPass",
           "value": 0,
-          "percent": 0.3,
+          "percent": 0.4,
           "depth": 0
         },
         {
@@ -1116,26 +1116,26 @@
         },
         {
           "name": "CanonicalizerPass",
-          "value": 0.0001,
-          "percent": 1.9,
+          "value": 0.0002,
+          "percent": 2.3,
           "depth": 0
         },
         {
           "name": "ConvertLinalgToLoopsPass",
           "value": 0.0004,
-          "percent": 6.3,
+          "percent": 5.9,
           "depth": 0
         },
         {
           "name": "SCFToControlFlowPass",
           "value": 0.0002,
-          "percent": 2.6,
+          "percent": 2.7,
           "depth": 0
         },
         {
           "name": "ExpandStridedMetadataPass",
           "value": 0.0002,
-          "percent": 3.2,
+          "percent": 3,
           "depth": 0
         },
         {
@@ -1147,25 +1147,25 @@
         {
           "name": "ArithToLLVMConversionPass",
           "value": 0.0004,
-          "percent": 5.9,
+          "percent": 5.7,
           "depth": 0
         },
         {
           "name": "FinalizeMemRefToLLVMConversionPass",
           "value": 0.0006,
-          "percent": 8.6,
+          "percent": 8.2,
           "depth": 0
         },
         {
           "name": "(A) DataLayoutAnalysis",
           "value": 0,
-          "percent": 0.2,
+          "percent": 0.3,
           "depth": 1
         },
         {
           "name": "ConvertFuncToLLVMPass",
           "value": 0.0003,
-          "percent": 3.6,
+          "percent": 4,
           "depth": 0
         },
         {
@@ -1176,26 +1176,26 @@
         },
         {
           "name": "ConvertControlFlowToLLVMPass",
-          "value": 0.0003,
-          "percent": 4.6,
+          "value": 0.0004,
+          "percent": 5.1,
           "depth": 0
         },
         {
           "name": "ReconcileUnrealizedCastsPass",
           "value": 0.0002,
-          "percent": 2.7,
+          "percent": 2.6,
           "depth": 0
         },
         {
           "name": "Output",
           "value": 0.0004,
-          "percent": 5.4,
+          "percent": 5.1,
           "depth": 0
         },
         {
           "name": "Rest",
-          "value": 0.0014,
-          "percent": 19.3,
+          "value": 0.0015,
+          "percent": 20.6,
           "depth": 0
         }
       ],
@@ -1239,7 +1239,7 @@
       "kind": "execution",
       "title": "Mojo kernel throughput (untiled, one core, best of 3-5 runs)",
       "exitCode": 0,
-      "stdout": "matmul   64 x 64 x 64    0.032 ms   16.384 GFLOP/s\nmatmul   128 x 128 x 128    0.195 ms   21.50925128205128 GFLOP/s\nmatmul   256 x 256 x 256    1.451 ms   23.125039283252928 GFLOP/s\nmatmul   512 x 512 x 512    13.875 ms   19.34669953153153 GFLOP/s\nconv2d   56 x 56 x 64 -> 64    12.918 ms   16.642734788666978 GFLOP/s\nconv2d   28 x 28 x 128 -> 128    9.235 ms   21.587494531672984 GFLOP/s",
+      "stdout": "matmul   64 x 64 x 64    0.031 ms   16.91251612903226 GFLOP/s\nmatmul   128 x 128 x 128    0.187 ms   22.429433155080215 GFLOP/s\nmatmul   256 x 256 x 256    1.446 ms   23.205001383125865 GFLOP/s\nmatmul   512 x 512 x 512    13.697 ms   19.598120464335256 GFLOP/s\nconv2d   56 x 56 x 64 -> 64    12.611 ms   17.047882642137814 GFLOP/s\nconv2d   28 x 28 x 128 -> 128    14.306 ms   13.935447504543548 GFLOP/s",
       "provenance": {
         "mode": "captured",
         "command": "pixi run bench"
