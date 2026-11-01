@@ -193,33 +193,10 @@ header.site {
   outline-offset: 2px;
 }
 
-footer.site {
-  color: var(--muted);
-  font-size: 0.85rem;
-  padding-top: 0.5rem;
-  padding-bottom: 2rem;
-}
-footer.site::before {
-  content: "";
-  display: block;
-  width: 30%;
-  border-top: 1px solid var(--muted);
-  margin-bottom: 0.5rem;
-}
-
 .post-head {
   margin: 1.5rem 0 2rem;
   padding-bottom: 0.9rem;
   border-bottom: 2px solid var(--rule);
-}
-.kicker {
-  margin: 0 0 0.3rem;
-  font: 0.85rem var(--mono);
-  color: var(--muted);
-}
-.kicker::before {
-  content: "$ cat ";
-  color: var(--muted);
 }
 .dek {
   font: 1rem/1.5 var(--sans);

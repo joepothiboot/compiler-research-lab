@@ -318,8 +318,8 @@ function renderTimeline(ctx, prefix) {
   return `<div class="table-wrap" tabindex="0"><table><caption>Pass events, in execution order</caption><thead><tr><th scope="col" class="num">#</th><th scope="col">Pass</th><th scope="col">Effect</th><th scope="col" class="num">IR lines after</th></tr></thead><tbody>${rows}</tbody></table></div>${provenance(hit)}`;
 }
 
-/** @param {{ title: string, description: string, base: string, body: string, ctx: Ctx }} o */
-export function page({ title, description, base, body, ctx }) {
+/** @param {{ title: string, description: string, base: string, body: string }} o */
+export function page({ title, description, base, body }) {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -341,7 +341,6 @@ export function page({ title, description, base, body, ctx }) {
 <main id="main">
 ${body}
 </main>
-<footer class="site"><p>LLVM ${esc(ctx.manifest.toolchain.llvm)} · Python ${esc(ctx.manifest.toolchain.python)} · Node ${esc(ctx.manifest.toolchain.node)}. Versions pinned in <a href="${base}manifest.json">manifest.json</a>. Artifacts: <a href="${base}artifacts/">artifacts/</a>. Nothing here is mocked; gaps are labelled.</p></footer>
 </body>
 </html>
 `;
@@ -538,15 +537,13 @@ export function articlePage(ctx) {
 
   const body = `<article class="post">
 <header class="post-head">
-<p class="kicker">manifest.json</p>
 <h1>Compiler Research Lab</h1>
 <p class="dek">A tensor compiler, an accelerator simulator, and a browser-based IR inspector, each pinned to a commit and run for real to produce every number on this page.</p>
 <p class="byline">${captured ? `Outputs captured <time datetime="${esc(captured.slice(0, 10))}">${esc(captured.slice(0, 10))}</time> · ` : ""}LLVM ${esc(ctx.manifest.toolchain.llvm)}</p>
 </header>
-<p>Detailed walkthroughs below use pinned project revisions and real tool output.</p>
 <p class="links">${projects.map((p) => `<a href="#${esc(p.id)}">${esc(p.name)}</a>`).join(" · ")}</p>
 <section class="projects" aria-labelledby="h-walkthroughs">
-<h2 id="h-walkthroughs">Featured project walkthroughs</h2>
+<h2 id="h-walkthroughs">Projects</h2>
 ${walkthroughs.map((s) => s.html).join("\n")}
 </section>
 <section class="projects" aria-labelledby="h-other">
@@ -567,7 +564,6 @@ ${notes}
       "Compiler implementation, accelerator modeling, and browser-based compiler IR inspection.",
     base: "",
     body,
-    ctx,
   });
 }
 
@@ -581,6 +577,5 @@ export function artifactIndex(/** @type {Ctx} */ ctx) {
     description: "Machine-readable artifacts per project.",
     base: "../",
     body: `<h1>Artifacts</h1><p>One JSON file per project, validated against the shared model in <code>src/model.js</code>. <a href="../index.html">Back to the article</a>.</p><ul>${items}</ul>`,
-    ctx,
   });
 }
