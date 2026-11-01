@@ -10,6 +10,24 @@ section.project h3 {
   margin: 0 0 0.2rem;
   font-size: 1.1rem;
 }
+.featured-projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 3rem;
+}
+.featured-project {
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--rule);
+  padding: 1rem;
+}
+.featured-project h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+.featured-project p {
+  margin: 0.4rem 0;
+}
 .entry p {
   margin: 0.2rem 0;
 }

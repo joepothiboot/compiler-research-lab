@@ -4,9 +4,9 @@ import {
   DIFF_ROWS_COLLAPSED,
   LONG_LINES,
   STAGE_LABEL,
-  STAGES,
   THEME_KEY,
 } from "./constants.js";
+import { FEATURED_PROJECTS } from "../content/projects.js";
 
 /** @typedef {import("./model.js").Project} Project */
 /** @typedef {import("./model.js").Manifest} Manifest */
@@ -516,47 +516,83 @@ function projectEntry(ctx, p) {
 export function articlePage(ctx) {
   const { projects } = ctx.manifest;
   const entries = projects.map((p) => projectEntry(ctx, p));
+  const featuredWalkthroughIds = new Set(
+    FEATURED_PROJECTS.filter((p) => p.walkthrough).map((p) => p.id),
+  );
+  const walkthroughs = projects.flatMap((p, i) =>
+    featuredWalkthroughIds.has(p.id) ? [entries[i]] : [],
+  );
+  const otherProjects = projects.flatMap((p, i) =>
+    !featuredWalkthroughIds.has(p.id) ? [entries[i]] : [],
+  );
 
   const captured = [...ctx.artifacts.values()]
     .map((h) => h.file.capture.capturedAt)
     .sort()
     .at(-1);
 
-  const stages = STAGES.map((s) => {
-    const by = projects.filter((p) => p.stages.includes(s));
-
-    return `<li><strong>${esc(STAGE_LABEL[s])}.</strong> ${esc(ctx.stageText[s])} <span class="meta">${by.map((p) => `<a href="#${esc(p.id)}">${esc(p.name)}</a>`).join(", ")}</span></li>`;
-  }).join("");
-
   const notes = entries
     .flatMap((s) => s.notes)
     .map(renderNote)
     .join("");
 
+  const featured = FEATURED_PROJECTS.map((f) => {
+    const project = projects.find((p) => p.id === f.id);
+    const repo = project?.repo ?? f.repo;
+    const commit = project?.commit ?? f.commit;
+    const docsPath = project?.docsPath ?? f.docsPath;
+    const name = project?.name ?? f.name;
+
+    if (!repo || !commit || !docsPath || !name) {
+      throw new Error(
+        `featured project ${f.id} is missing repository metadata`,
+      );
+    }
+
+    const source = `https://github.com/${repo}/tree/${commit}`;
+    const docs = `https://github.com/${repo}/blob/${commit}/${docsPath}`;
+    const walkthrough = f.walkthrough
+      ? ` / <a href="#${esc(f.id)}">captured walkthrough</a>`
+      : "";
+    const captureNote = f.walkthrough
+      ? ""
+      : '<p class="meta">Featured overview only; its outputs are not yet in the captured artifact set.</p>';
+
+    return `<article class="featured-project" data-project="${esc(f.id)}"><h3>${esc(name)}</h3><p>${esc(f.summary)}</p><p class="links"><a href="${esc(source)}">source at pinned commit</a> / <a href="${esc(docs)}">project overview</a>${walkthrough}</p>${captureNote}</article>`;
+  }).join("\n");
+
   const body = `<article class="post">
 <header class="post-head">
-<p class="kicker">MLIR · developer tooling</p>
+<p class="kicker">ML compilers · accelerator systems</p>
 <h1>Compiler Research Lab</h1>
-<p class="dek">Three pinned MLIR projects, read as one pipeline: source, diagnostics, MLIR, pass inspection, profiling.</p>
+<p class="dek">A small tensor compiler, an accelerator simulator, and a browser tool for reading compiler IR.</p>
 <p class="byline">${captured ? `Outputs captured <time datetime="${esc(captured.slice(0, 10))}">${esc(captured.slice(0, 10))}</time> · ` : ""}LLVM ${esc(ctx.manifest.toolchain.llvm)}</p>
 </header>
-<p>Each project below is pinned to one commit. Every output shown was captured from the project's own tools at that commit, or is a file shown verbatim from its repository. Where something could not be captured, the page says so instead of filling the gap.</p>
-<ol class="stages">${stages}</ol>
-<section class="projects" aria-labelledby="h-projects">
-<h2 id="h-projects">Projects</h2>
-${entries.map((s) => s.html).join("\n")}
+<p>The featured set connects compiler implementation, accelerator modeling, and IR inspection. Detailed walkthroughs use pinned project revisions and real tool output; mock-npu-bench is linked at a fixed revision but its outputs are not yet captured here.</p>
+<section class="featured-projects" aria-labelledby="h-featured">
+<h2 id="h-featured">Featured projects</h2>
+${featured}
+</section>
+<section class="projects" aria-labelledby="h-walkthroughs">
+<h2 id="h-walkthroughs">Featured project walkthroughs</h2>
+${walkthroughs.map((s) => s.html).join("\n")}
+</section>
+<section class="projects" aria-labelledby="h-other">
+<h2 id="h-other">Other project</h2>
+<p>json-schema-mlir remains here as an additional compiler-front-end and diagnostics example. <a href="#schema-mlir">Read its walkthrough</a>.</p>
+${otherProjects.map((s) => s.html).join("\n")}
 </section>
 </article>
 <section class="appendix" id="notes" aria-labelledby="h-notes">
 <h2 id="h-notes">Appendix: walkthroughs and captured outputs</h2>
-<p class="meta">The material linked from the project list above, in order.</p>
+<p class="meta">The material linked from the detailed project sections above, in order.</p>
 ${notes}
 </section>`;
 
   return page({
     title: "Compiler Research Lab",
     description:
-      "Source → diagnostics → MLIR → pass inspection → profiling, across three pinned MLIR projects.",
+      "Compiler implementation, accelerator modeling, and browser-based compiler IR inspection.",
     base: "",
     body,
     ctx,

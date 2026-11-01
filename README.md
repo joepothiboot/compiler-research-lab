@@ -1,22 +1,22 @@
 # compiler-research-lab
 
-A static site that presents three separate MLIR projects as one compiler
-tooling pipeline: source, diagnostics, MLIR, pass inspection and profiling.
+A static site about compiler implementation, accelerator modeling, and
+compiler-IR inspection.
 
 Site: https://joepothiboot.github.io/compiler-research-lab/
 
-Each project is pinned to a commit in `manifest.json`. Everything the site
-shows (test results, IR dumps, diagnostics, timings) is output captured by
-running that project's own tools at the pinned commit. Nothing is written by
-hand.
+Captured projects are pinned to commits in `manifest.json`. Their test results,
+IR dumps, diagnostics and timings come from the projects' own tools at those
+commits. The featured `mock-npu-bench` overview links to a fixed commit but
+does not yet have captured artifacts on this site.
 
-| Project                                                              | Commit    | Covers                                                |
-| -------------------------------------------------------------------- | --------- | ----------------------------------------------------- |
-| [nano-dsp-mlir](https://github.com/joepothiboot/nano-dsp-mlir)       | `0de4c3c` | Lowering, tiling, vectorization, execution, profiling |
-| [VizMLIR](https://github.com/joepothiboot/vizmlir)                   | `4064da8` | Pass inspection and GPU analysis of the IR            |
-| [json-schema-mlir](https://github.com/joepothiboot/json-schema-mlir) | `914691c` | Front end, diagnostics, lowering                      |
+| Featured project                                                 | Commit    | Focus                                                     |
+| ---------------------------------------------------------------- | --------- | --------------------------------------------------------- |
+| [nano-dsp-mlir](https://github.com/joepothiboot/nano-dsp-mlir)   | `0de4c3c` | Small tensor compiler; output checked against a reference |
+| [mock-npu-bench](https://github.com/joepothiboot/mock-npu-bench) | `65de79f` | Simulator and performance profiles for a fictional NPU    |
+| [VizMLIR](https://github.com/joepothiboot/vizmlir)               | `4064da8` | Browser tool for exploring compiler IR                    |
 
-## The projects
+## Featured projects
 
 **nano-dsp-mlir** is an MLIR compiler for a small tensor DSL. A `dsp` dialect
 is lowered to `linalg.generic` and on to LLVM, tiled and vectorized by a
@@ -25,6 +25,11 @@ bit against the unscheduled code. Mojo kernels and a C++ reference are tested
 against the same values. Captured: 23 lit, 17 Mojo and 7 C++ reference tests.
 The emulated Hexagon run and the MLIR-vs-Mojo benchmark aren't captured.
 
+**mock-npu-bench** simulates MN1, a fictional vector accelerator with an
+in-order core, vector unit, scratchpad and asynchronous DMA. Its examples and
+cycle-level profiles make accelerator behavior tangible. Its overview is
+pinned to `65de79f`; simulator output is not yet captured in this site.
+
 **VizMLIR** reads `mlir-opt` pass traces in the browser and shows how the IR
 changes per pass. For GPU code it maps launches to blocks and warps, sorts
 buffers by memory space, and classifies each load and store (coalesced,
@@ -32,6 +37,8 @@ strided, misaligned, broadcast, bank conflict). It follows CUDA-path MLIR down
 to PTX and also reads Triton GPU IR. It reads IR only and doesn't time
 anything. Captured: 330 vitest tests. The site links to
 [its own app](https://joepothiboot.github.io/vizmlir/) instead of embedding it.
+
+## Other projects
 
 **json-schema-mlir** compiles JSON Schema (Draft 2020-12) to native
 validators: a hand-written front end into a `schema` dialect, lattice-based
@@ -42,8 +49,8 @@ each op back to the JSON that produced it.
 
 ## How the data stays honest
 
-- Every project is pinned to a full commit SHA. The tooling refuses branch
-  names, and all source links point at the pinned commit.
+- Every captured project is pinned to a full commit SHA. The tooling refuses
+  branch names, and source links point at pinned commits.
 - Every artifact is one of three kinds: `captured` (tool output, with the exact
   command, host and toolchain), `static` (a file read verbatim from the repo),
   or `unavailable` (deliberately missing, with the reason).
@@ -126,11 +133,11 @@ scripts/              build, capture, manifest update and reconcile
 test/                 unit tests and an integration test over the built site
 ```
 
-All three projects contribute the same artifact kinds (`source`, `diagnostic`,
-`ir-snapshot`, `pass-event`, `profile`, `execution`, `test-run`, plus `trace`
-for json-schema-mlir), defined in [`src/model.js`](src/model.js). Artifact ids
-are global, so a VizMLIR pass event can reference snapshots captured from
-another project.
+Projects in `manifest.json` contribute the artifact kinds (`source`,
+`diagnostic`, `ir-snapshot`, `pass-event`, `profile`, `execution`, `test-run`,
+plus `trace` for json-schema-mlir), defined in [`src/model.js`](src/model.js).
+Artifact ids are global, so a VizMLIR pass event can reference snapshots
+captured from another project.
 
 ## Contributing
 

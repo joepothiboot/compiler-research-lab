@@ -33,6 +33,30 @@ export const STAGE_TEXT = {
   profiling: "Compile time per pass, plus runtime numbers where they exist.",
 };
 
+export const FEATURED_PROJECTS = [
+  {
+    id: "nano-dsp-mlir",
+    summary:
+      "A small tensor compiler whose output is checked against an independent reference.",
+    walkthrough: true,
+  },
+  {
+    id: "mock-npu-bench",
+    name: "mock-npu-bench",
+    repo: "joepothiboot/mock-npu-bench",
+    commit: "65de79f12c1ae2ff917c1b093c71eeec9f190622",
+    docsPath: "README.md",
+    summary:
+      "A cycle-level simulator for a fictional vector accelerator, with an assembler and performance profiles.",
+  },
+  {
+    id: "vizmlir",
+    summary:
+      "A browser tool for exploring compiler IR, pass traces and structural diffs.",
+    walkthrough: true,
+  },
+];
+
 /** @type {Record<string, ProjectContent>} */
 export const PROJECTS = {
   "schema-mlir": {
