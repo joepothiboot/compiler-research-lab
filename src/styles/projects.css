@@ -8,7 +8,6 @@ section.project {
 }
 section.project h3 {
   margin: 0 0 0.2rem;
-  font-size: 1.1rem;
 }
 .entry p {
   margin: 0.2rem 0;
@@ -20,13 +19,12 @@ section.project h3 {
 }
 .hw-project h3 {
   margin: 0 0 0.3rem;
-  font-size: 1.05rem;
 }
 .hw-project p {
   margin: 0.3rem 0;
 }
 .venue {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 .links {
   font: 0.9rem/1.5 var(--sans);
