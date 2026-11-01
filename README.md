@@ -1,9 +1,9 @@
-# compiler-tooling-lab
+# compiler-research-lab
 
 A static site that presents three separate MLIR projects as one compiler
 tooling pipeline: source, diagnostics, MLIR, pass inspection and profiling.
 
-Site: https://joepothiboot.github.io/compiler-tooling-lab/
+Site: https://joepothiboot.github.io/compiler-research-lab/
 
 Each project is pinned to a commit in `manifest.json`. Everything the site
 shows (test results, IR dumps, diagnostics, timings) is output captured by
@@ -109,7 +109,7 @@ and nano-dsp-mlir already do this on `v*` tags):
 curl -fsS -X POST \
   -H "Authorization: Bearer $LAB_DISPATCH_TOKEN" \
   -H "Accept: application/vnd.github+json" \
-  https://api.github.com/repos/joepothiboot/compiler-tooling-lab/dispatches \
+  https://api.github.com/repos/joepothiboot/compiler-research-lab/dispatches \
   -d '{"event_type":"project-release","client_payload":{"project":"vizmlir","ref":"v0.3.0"}}'
 ```
 

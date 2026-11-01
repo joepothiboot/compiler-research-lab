@@ -85,7 +85,7 @@ function provenance({ artifact: a, project: p, file }) {
     const path = pv.path ?? "";
 
     const where = path.startsWith("lab:")
-      ? `<code>compiler-tooling-lab/${esc(path.slice(4))}</code>`
+      ? `<code>compiler-research-lab/${esc(path.slice(4))}</code>`
       : `<a href="${esc(gh(p, "blob", path))}"><code>${esc(path)}</code></a> at ${esc(p.name)}@${short(p.commit)}`;
 
     return `<p class="prov"><span class="badge static">Static file</span> ${where}, shown verbatim.</p>`;
@@ -536,7 +536,7 @@ export function articlePage(ctx) {
   const body = `<article class="post">
 <header class="post-head">
 <p class="kicker">MLIR · developer tooling</p>
-<h1>Compiler Tooling Lab</h1>
+<h1>Compiler Research Lab</h1>
 <p class="dek">Three pinned MLIR projects, read as one pipeline: source, diagnostics, MLIR, pass inspection, profiling.</p>
 <p class="byline">${captured ? `Outputs captured <time datetime="${esc(captured.slice(0, 10))}">${esc(captured.slice(0, 10))}</time> · ` : ""}LLVM ${esc(ctx.manifest.toolchain.llvm)}</p>
 </header>
@@ -554,7 +554,7 @@ ${notes}
 </section>`;
 
   return page({
-    title: "Compiler Tooling Lab",
+    title: "Compiler Research Lab",
     description:
       "Source → diagnostics → MLIR → pass inspection → profiling, across three pinned MLIR projects.",
     base: "",
@@ -569,7 +569,7 @@ export function artifactIndex(/** @type {Ctx} */ ctx) {
     .join("");
 
   return page({
-    title: "Artifacts · Compiler Tooling Lab",
+    title: "Artifacts · Compiler Research Lab",
     description: "Machine-readable artifacts per project.",
     base: "../",
     body: `<h1>Artifacts</h1><p>One JSON file per project, validated against the shared model in <code>src/model.js</code>. <a href="../index.html">Back to the article</a>.</p><ul>${items}</ul>`,

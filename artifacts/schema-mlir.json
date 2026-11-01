@@ -227,7 +227,7 @@
       "kind": "source",
       "title": "Contradictory constraint (input written for this lab)",
       "language": "mlir",
-      "text": "// Written for compiler-tooling-lab: a deliberately contradictory constraint,\n// used to capture a real schema-opt verifier diagnostic.\nfunc.func @bad(%doc: !schema.value) -> i1 {\n  %v = schema.validate_string %doc { min_length = 8 : i64, max_length = 3 : i64 } : !schema.value\n  return %v : i1\n}\n",
+      "text": "// Written for compiler-research-lab: a deliberately contradictory constraint,\n// used to capture a real schema-opt verifier diagnostic.\nfunc.func @bad(%doc: !schema.value) -> i1 {\n  %v = schema.validate_string %doc { min_length = 8 : i64, max_length = 3 : i64 } : !schema.value\n  return %v : i1\n}\n",
       "location": {
         "file": "lab:inputs/schema-mlir/contradictory-bounds.mlir",
         "line": 1

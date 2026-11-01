@@ -1,5 +1,5 @@
 {
-  "name": "compiler-tooling-lab",
+  "name": "compiler-research-lab",
   "version": "0.1.0",
   "private": true,
   "description": "Integration portal for json-schema-mlir, VizMLIR and nano-dsp-mlir.",

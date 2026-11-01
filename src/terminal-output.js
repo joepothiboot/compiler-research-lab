@@ -1,7 +1,7 @@
 import { HEAT_PERCENT, PROFILE_NAME_WIDTH } from "./constants.js";
 
 const lab = (/** @type {string} */ p) =>
-  p.startsWith("lab:") ? `compiler-tooling-lab/${p.slice(4)}` : p;
+  p.startsWith("lab:") ? `compiler-research-lab/${p.slice(4)}` : p;
 
 export function commandOf(/** @type {Json} */ a) {
   const pv = a.provenance;

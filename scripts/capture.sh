@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ONLY="${1:-}"
 TMP_ROOT="${RUNNER_TEMP:-${TMPDIR:-/tmp}}"
-WORK="${WORK_DIR:-${TMP_ROOT%/}/compiler-tooling-lab-work}"
+WORK="${WORK_DIR:-${TMP_ROOT%/}/compiler-research-lab-work}"
 WORK="${WORK%/}"
 
 if [[ "$WORK" == *" "* ]]; then
