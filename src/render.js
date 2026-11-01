@@ -563,9 +563,9 @@ export function articlePage(ctx) {
 
   const body = `<article class="post">
 <header class="post-head">
-<p class="kicker">ML compilers · accelerator systems</p>
+<p class="kicker">manifest.json</p>
 <h1>Compiler Research Lab</h1>
-<p class="dek">A small tensor compiler, an accelerator simulator, and a browser tool for reading compiler IR.</p>
+<p class="dek">A tensor compiler, an accelerator simulator, and a browser-based IR inspector, each pinned to a commit and run for real to produce every number on this page.</p>
 <p class="byline">${captured ? `Outputs captured <time datetime="${esc(captured.slice(0, 10))}">${esc(captured.slice(0, 10))}</time> · ` : ""}LLVM ${esc(ctx.manifest.toolchain.llvm)}</p>
 </header>
 <p>The featured set connects compiler implementation, accelerator modeling, and IR inspection. Detailed walkthroughs use pinned project revisions and real tool output; mock-npu-bench is linked at a fixed revision but its outputs are not yet captured here.</p>
